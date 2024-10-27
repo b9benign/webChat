@@ -1,19 +1,21 @@
 import React from "react";
-import ThemeContextProvider from "./context/theme-context/ThemeContextProvider";
-import { tokens } from "@fluentui/react-components";
+import ThemeContextProvider from "./context/theme/ThemeContextProvider";
+import AuthenticationContextProvider from "./context/authentication/AuthenticationContextProvider";
+import ApplicationContentWrapper from "./components/application-content-wrapper/ApplicationContentWrapper";
+import Page from "./components/page/Page";
 
 export default function App(): React.JSX.Element {
 
 	return (
-		<React.Fragment>
-			<ThemeContextProvider>
-				<h1
-					style={{ color: tokens.colorBrandForeground1 }}
-				>
-					Guten Morgen liebe Sorgen
-				</h1>
-			</ThemeContextProvider>
-		</React.Fragment>
+		<ThemeContextProvider>
+			<AuthenticationContextProvider>
+				<ApplicationContentWrapper>
+					<Page documentTitle="Example">
+						page
+					</Page>
+				</ApplicationContentWrapper>
+			</AuthenticationContextProvider>
+		</ThemeContextProvider>
 	)
 }
 
