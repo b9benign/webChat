@@ -1,7 +1,6 @@
-import React from "react"
-import { PageProperties } from "./PageProperties"
 import { makeStyles } from "@fluentui/react-components";
-import Navigation from "../navigation/Navigation";
+import React from "react";
+import { PageProperties } from "./PageProperties";
 
 const useStyles = makeStyles({
     pageWrapper: {
@@ -13,6 +12,7 @@ const useStyles = makeStyles({
     contentWrapper: {
         width: "90%",
         minWidth: "500px",
+        minHeight: "100vh",
         border: "1px solid red",
         margin: "0 auto 0 auto",
     }
@@ -31,7 +31,7 @@ export default function Page(properties: React.PropsWithChildren<PageProperties>
 
     return (
         <div className={pageWrapper}>
-            <Navigation />
+            {/* <Navigation /> */}
             <div className={contentWrapper}>
                  {properties.children}
             </div>
