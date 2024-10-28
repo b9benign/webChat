@@ -1,5 +1,6 @@
 import React from "react";
 import Page from "../../components/page/Page";
+import useAuthenticationContext from "../../context/authentication/useAuthenticationContext";
 
 
 export default function LoginPage(): React.JSX.Element {
@@ -11,11 +12,19 @@ export default function LoginPage(): React.JSX.Element {
     //email + password
     //demo account setup via email + password
 
+    const { signInWithProvider, user } = useAuthenticationContext();
 
+    const u = React.useMemo(() => {
+        console.log("USER: ", user)
+        return user;
+    }, [user])
+    
     return (
         <Page documentTitle="Welcome">
-            <h1>blob</h1>
-       
+            <button onClick={() => signInWithProvider()}>
+                Google
+            </button>
+            <h1>{JSON.stringify(u)}</h1>
         </Page>
     )
 }
