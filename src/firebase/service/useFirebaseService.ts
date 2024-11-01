@@ -11,10 +11,10 @@ export default function useFirebaseService(): FirebaseService {
     try {
       const result = await signInWithPopup(firebase, provider);
       console.log("RESULT: ", result);
-      dispatchSuccess({ body: `Signed in as ${result.user.displayName}` });
+      dispatchSuccess({ primaryContent: `Signed in as ${result.user.displayName}` });
     } catch (e: any) {
       console.log(e, "155dfa48-6339-47e0-96f7-f28205a3a866");
-      dispatchError({ body: "shits gone wrong yo" });
+      dispatchError({ primaryContent: "shits gone wrong yo" });
     }
   } 
 
