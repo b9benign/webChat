@@ -1,8 +1,9 @@
-import { UserCredential } from "firebase/auth";
+import { User } from "firebase/auth";
 import React from "react";
 
 export type AuthenticationContext = {
-    user: UserCredential | null
+    userCredentials: User | null,
+    signInWithGooglePopup(): Promise<void>
 }
 
 export const authenticationContext = React.createContext<AuthenticationContext | null>(null);
