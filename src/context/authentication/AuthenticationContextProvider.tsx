@@ -1,9 +1,8 @@
 import React from "react";
-import { authenticationContext } from "./AuthenticationContext";
 import useFirebaseInitializer from "../../firebase/initializer/useFirebaseInitializer";
-import { onAuthStateChanged, signInWithPopup, User, UserCredential } from "firebase/auth";
+import { onAuthStateChanged, signInWithPopup, User } from "firebase/auth";
 import useToastContext from "../toast/useToastContext";
-
+import { authenticationContext } from "./AuthenticationContext";
 
 export default function AuthenticationContextProvider(properties: React.PropsWithChildren): React.JSX.Element {
     
@@ -11,7 +10,7 @@ export default function AuthenticationContextProvider(properties: React.PropsWit
     const { dispatchError, dispatchSuccess } = useToastContext();
     const [userCredentials, setUserCredentials] = React.useState<User | null>(null);
 
-    async function signInWithGooglePopup() { //typisieren
+    async function signInWithGooglePopup() {
         try {
           const result = await signInWithPopup(firebase, provider);
           dispatchSuccess({ primaryContent: `Signed in as ${result.user.displayName}`, title: undefined });

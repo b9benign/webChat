@@ -12,9 +12,7 @@ export default function Navigation(): React.JSX.Element {
 
     const { navigationWrapper } = useStyles();
 
-    //implement Firebase & noSQL Firestore
-    //TODO: leverage useAuthenticationContext() for User, isAuthenticated etc.
-    //implement FluentUI Nav (settings, logout, OV of user-props)
+    //implement FluentUI Nav (settings [mode, theme, perhaps font for the boomers], logout, OV of user-props)
 
     return (
         <div className={navigationWrapper}>
