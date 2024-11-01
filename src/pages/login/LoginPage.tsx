@@ -1,6 +1,7 @@
 import React from "react";
 import Page from "../../components/page/Page";
 import useAuthenticationContext from "../../context/authentication/useAuthenticationContext";
+import useFirebaseService from "../../firebase/service/useFirebaseService";
 
 
 export default function LoginPage(): React.JSX.Element {
@@ -12,7 +13,8 @@ export default function LoginPage(): React.JSX.Element {
     //email + password
     //demo account setup via email + password
 
-    const { signInWithProvider, user } = useAuthenticationContext();
+    const { user } = useAuthenticationContext();
+    const { signInWithGooglePopup } = useFirebaseService();
 
     const u = React.useMemo(() => {
         console.log("USER: ", user)
@@ -21,7 +23,7 @@ export default function LoginPage(): React.JSX.Element {
     
     return (
         <Page documentTitle="Welcome">
-            <button onClick={() => signInWithProvider()}>
+            <button onClick={() => signInWithGooglePopup()}>
                 Google
             </button>
             <h1>{JSON.stringify(u)}</h1>
