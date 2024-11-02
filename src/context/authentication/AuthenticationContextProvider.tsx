@@ -15,7 +15,7 @@ export default function AuthenticationContextProvider(properties: React.PropsWit
 			});
 		}
 		unsubscribe();
-	}, [userCredentials]);
+	}, [userCredentials, firebase]);
 
 	const value = {
 		userCredentials

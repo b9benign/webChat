@@ -5,6 +5,9 @@ export type InputProperties =
         | "appearance"
         | "contentAfter"
         | "contentBefore"
+        | "name"
+        | "onChange"
+        | "placeholder"
         | "type"
         | "value">
     & Pick<FieldProps, "label">
