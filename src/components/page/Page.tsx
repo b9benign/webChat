@@ -8,13 +8,15 @@ const useStyles = makeStyles({
         minWidth: "100%",
         display: "flex",
         flexDirection: "column",
+        background: tokens.colorNeutralBackground2,
+        paddingBottom: tokens.spacingVerticalXXXL
     },
     contentWrapper: {
         width: "90%",
-        minWidth: "500px",
+        minWidth: "300px",
         minHeight: "100vh",
-        border: `1px solid ${tokens.colorBrandForeground1}`,
         margin: "0 auto 0 auto",
+        position: "relative",
     }
 })
 

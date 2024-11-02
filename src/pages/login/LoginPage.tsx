@@ -1,42 +1,26 @@
 import React from "react";
 import Page from "../../components/page/Page";
-import { Button, Persona } from "@fluentui/react-components";
-import useToastContext from "../../context/toast/useToastContext";
-import useAuthenticationContext from "../../context/authentication/useAuthenticationContext";
+import { makeStyles, tokens } from "@fluentui/react-components";
+import LoginMenu from "../../components/login/menu/LoginMenu";
 
 export default function LoginPage(): React.JSX.Element {
-  const { userCredentials, signInWithGooglePopup } = useAuthenticationContext();
-  const { dispatchInfo } = useToastContext();
 
-  const src = React.useMemo(() => userCredentials?.photoURL ?? undefined, [userCredentials?.photoURL]);
+	const { menuSpacer } = useStyles();
 
-  return (
-    <Page documentTitle="Welcome">
-      <Button appearance="transparent" onClick={() => signInWithGooglePopup()}>
-        Google
-      </Button>
-      <Button
-        appearance="transparent"
-        onClick={() =>
-          dispatchInfo({
-            primaryContent: userCredentials?.photoURL ?? "",
-            title: undefined,
-          })
-        }
-      >
-        Toast-Test
-      </Button>
-      {userCredentials ? (
-        <Persona
-          name={userCredentials.displayName ?? undefined}
-          secondaryText="Available"
-          presence={{ status: "available" }}
-          avatar={{
-            color: "colorful",
-            image: { src },
-          }}
-        />
-      ) : null}
-    </Page>
-  );
+	return (
+		<Page documentTitle="Welcome">
+			<div className={menuSpacer}>
+				<LoginMenu />
+			</div>
+		</Page>
+	);
 }
+
+const useStyles = makeStyles({
+	menuSpacer: {
+		width: "100%",
+		maxWidth: "500px",
+		height: "400px",
+		margin: `${tokens.spacingVerticalXXXL} auto 0 auto`
+	}
+})
