@@ -3,9 +3,11 @@ import Page from "../../components/page/Page";
 import { Button, Persona } from "@fluentui/react-components";
 import useToastContext from "../../context/toast/useToastContext";
 import useAuthenticationContext from "../../context/authentication/useAuthenticationContext";
+import useFirebaseService from "../../services/firebase/functions/useFirebaseFunctions";
 
 export default function LoginPage(): React.JSX.Element {
-  const { userCredentials, signInWithGooglePopup } = useAuthenticationContext();
+  const { userCredentials } = useAuthenticationContext();
+  const { signInWithGooglePopup } = useFirebaseService();
   const { dispatchInfo } = useToastContext();
 
   const src = React.useMemo(() => userCredentials?.photoURL ?? undefined, [userCredentials?.photoURL]);
