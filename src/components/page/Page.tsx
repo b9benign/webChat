@@ -1,6 +1,6 @@
-import { makeStyles } from "@fluentui/react-components";
 import React from "react";
 import { PageProperties } from "./PageProperties";
+import { makeStyles, tokens } from "@fluentui/react-components";
 
 const useStyles = makeStyles({
     pageWrapper: {
@@ -13,7 +13,7 @@ const useStyles = makeStyles({
         width: "90%",
         minWidth: "500px",
         minHeight: "100vh",
-        border: "1px solid red",
+        border: `1px solid ${tokens.colorBrandForeground1}`,
         margin: "0 auto 0 auto",
     }
 })

@@ -13,7 +13,7 @@ export default function Toast(properties: ToastProperties): React.JSX.Element {
                 }>
                 {properties.title}
             </ToastTitle>
-            <ToastBody>{properties.body}</ToastBody>
+            <ToastBody>{properties.primaryContent}</ToastBody>
         </FluentToast>
     )
 }

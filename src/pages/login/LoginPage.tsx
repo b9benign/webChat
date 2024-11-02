@@ -1,30 +1,42 @@
 import React from "react";
 import Page from "../../components/page/Page";
+import { Button, Persona } from "@fluentui/react-components";
+import useToastContext from "../../context/toast/useToastContext";
 import useAuthenticationContext from "../../context/authentication/useAuthenticationContext";
 
-
 export default function LoginPage(): React.JSX.Element {
+  const { userCredentials, signInWithGooglePopup } = useAuthenticationContext();
+  const { dispatchInfo } = useToastContext();
 
-    //Sign up
-    //for now only email + password
-    //Sign in
-    //Google account (Poup, not redirect)
-    //email + password
-    //demo account setup via email + password
+  const src = React.useMemo(() => userCredentials?.photoURL ?? undefined, [userCredentials?.photoURL]);
 
-    const { signInWithProvider, user } = useAuthenticationContext();
-
-    const u = React.useMemo(() => {
-        console.log("USER: ", user)
-        return user;
-    }, [user])
-    
-    return (
-        <Page documentTitle="Welcome">
-            <button onClick={() => signInWithProvider()}>
-                Google
-            </button>
-            <h1>{JSON.stringify(u)}</h1>
-        </Page>
-    )
+  return (
+    <Page documentTitle="Welcome">
+      <Button appearance="transparent" onClick={() => signInWithGooglePopup()}>
+        Google
+      </Button>
+      <Button
+        appearance="transparent"
+        onClick={() =>
+          dispatchInfo({
+            primaryContent: userCredentials?.photoURL ?? "",
+            title: undefined,
+          })
+        }
+      >
+        Toast-Test
+      </Button>
+      {userCredentials ? (
+        <Persona
+          name={userCredentials.displayName ?? undefined}
+          secondaryText="Available"
+          presence={{ status: "available" }}
+          avatar={{
+            color: "colorful",
+            image: { src },
+          }}
+        />
+      ) : null}
+    </Page>
+  );
 }

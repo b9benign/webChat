@@ -1,6 +1,6 @@
-import React from "react"
+import { ToastProps as FluentToastProperties } from "@fluentui/react-components"
 
 export type ToastProperties = {
-    body: React.ReactNode,
-    title: React.ReactNode
+    primaryContent: FluentToastProperties["content"],
+    title: FluentToastProperties["title"],
 }

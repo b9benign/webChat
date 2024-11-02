@@ -1,30 +1,36 @@
 import React from "react";
-import { AuthenticationContext, authenticationContext } from "./AuthenticationContext";
 import useFirebaseInitializer from "../../firebase/initializer/useFirebaseInitializer";
-import { signInWithPopup, UserCredential } from "firebase/auth";
-
+import { onAuthStateChanged, signInWithPopup, User } from "firebase/auth";
+import useToastContext from "../toast/useToastContext";
+import { authenticationContext } from "./AuthenticationContext";
 
 export default function AuthenticationContextProvider(properties: React.PropsWithChildren): React.JSX.Element {
-
-    const { firebase, provider } = useFirebaseInitializer();
-    const [user, setUser] = React.useState<UserCredential | null>(null);
     
-    //TODO: create Firebase ServiceLayer
-    //only register currentAuth in this context
-    const signInWithProvider: AuthenticationContext["signInWithProvider"] = async () => {
+    const { firebase, provider } = useFirebaseInitializer();
+    const { dispatchError, dispatchSuccess } = useToastContext();
+    const [userCredentials, setUserCredentials] = React.useState<User | null>(null);
+
+    async function signInWithGooglePopup() {
         try {
-            const result = await signInWithPopup(firebase, provider);
-            console.log("RESULT: ", result)
-            setUser(result);
+          const result = await signInWithPopup(firebase, provider);
+          dispatchSuccess({ primaryContent: `Signed in as ${result.user.displayName}`, title: undefined });
         } catch (e: any) {
-            console.log(e, "155dfa48-6339-47e0-96f7-f28205a3a866");
-            setUser(null);
+          dispatchError({ primaryContent: "The login attempt has failed. Code 155dfa48-6339-47e0-96f7-f28205a3a866", title: undefined });
         }
-    };
+      };
+
+      React.useEffect(() => {
+        const unsubscribe = () => {
+            return onAuthStateChanged(firebase, (userCredentials) => {
+                if (userCredentials) setUserCredentials(userCredentials);
+            });
+        }
+        unsubscribe();
+      }, [userCredentials]);
 
     const value = {
-        signInWithProvider,
-        user
+        userCredentials,
+        signInWithGooglePopup
     };
     
     return (
