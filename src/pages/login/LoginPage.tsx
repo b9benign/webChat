@@ -1,44 +1,26 @@
 import React from "react";
 import Page from "../../components/page/Page";
-import { Button, Persona } from "@fluentui/react-components";
-import useToastContext from "../../context/toast/useToastContext";
-import useAuthenticationContext from "../../context/authentication/useAuthenticationContext";
-import useFirebaseService from "../../services/firebase/functions/useFirebaseFunctions";
+import { makeStyles, tokens } from "@fluentui/react-components";
+import LoginForm from "../../components/login-form/LoginForm";
 
 export default function LoginPage(): React.JSX.Element {
-  const { userCredentials } = useAuthenticationContext();
-  const { signInWithGooglePopup } = useFirebaseService();
-  const { dispatchInfo } = useToastContext();
 
-  const src = React.useMemo(() => userCredentials?.photoURL ?? undefined, [userCredentials?.photoURL]);
+	const { formSpacer } = useStyles();
 
-  return (
-    <Page documentTitle="Welcome">
-      <Button appearance="transparent" onClick={() => signInWithGooglePopup()}>
-        Google
-      </Button>
-      <Button
-        appearance="transparent"
-        onClick={() =>
-          dispatchInfo({
-            primaryContent: userCredentials?.photoURL ?? "",
-            title: undefined,
-          })
-        }
-      >
-        Toast-Test
-      </Button>
-      {userCredentials ? (
-        <Persona
-          name={userCredentials.displayName ?? undefined}
-          secondaryText="Available"
-          presence={{ status: "available" }}
-          avatar={{
-            color: "colorful",
-            image: { src },
-          }}
-        />
-      ) : null}
-    </Page>
-  );
+	return (
+		<Page documentTitle="Welcome">
+			<div className={formSpacer}>
+				<LoginForm />
+			</div>
+		</Page>
+	);
 }
+
+const useStyles = makeStyles({
+	formSpacer: {
+		width: "100%",
+		maxWidth: "500px",
+		height: "600px",
+		margin: `${tokens.spacingVerticalXXXL} auto 0 auto`
+	}
+})

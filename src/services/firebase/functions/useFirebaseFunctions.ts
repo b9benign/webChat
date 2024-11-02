@@ -1,9 +1,10 @@
 import { signInWithPopup } from "firebase/auth";
 import useToastContext from "../../../context/toast/useToastContext";
 import useFirebaseInitializer from "../initializer/useFirebaseInitializer";
-import { FirebaseService } from "./FirebaseService";
+import { FirebaseFunctions } from "./FirebaseFunctions";
+import { signOut as fireBaseSignOut } from "firebase/auth";
 
-export default function useFirebaseService(): FirebaseService {
+export default function useFirebaseFunctions(): FirebaseFunctions {
 
     const { firebase, provider } = useFirebaseInitializer();
     const { dispatchSuccess, dispatchError } = useToastContext();
@@ -17,7 +18,20 @@ export default function useFirebaseService(): FirebaseService {
 		}
 	};
 
+    async function signOut() {
+        try {
+            await fireBaseSignOut(firebase);
+            window.location.reload();
+        } catch (e: any) {
+            dispatchError({ primaryContent: `An error occured signing you out. Error code: ${e}`, title: undefined });
+        }
+    }
+
     return {
-        signInWithGooglePopup
+        signInWithGooglePopup,
+        signInWithEmailAndPassword: async () => {},
+        signOut,
+        signUpWithEmailAndPassword: async () => {},
+      
     };
 }

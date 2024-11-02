@@ -1,7 +1,7 @@
 import React from "react"
 import { ToastProperties } from "../../components/toast/ToastProperties";
 
-type DispatchToastFunction = (args: { primaryContent: ToastProperties["primaryContent"], title: ToastProperties["title"] }) => void
+type DispatchToastFunction = (args: { primaryContent: ToastProperties["primaryContent"], title?: ToastProperties["title"] }) => void
 
 export type ToastContext = {
     dispatchError: DispatchToastFunction,
