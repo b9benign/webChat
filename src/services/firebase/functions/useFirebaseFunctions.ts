@@ -32,6 +32,5 @@ export default function useFirebaseFunctions(): FirebaseFunctions {
         signInWithEmailAndPassword: async () => {},
         signOut,
         signUpWithEmailAndPassword: async () => {},
-      
     };
 }

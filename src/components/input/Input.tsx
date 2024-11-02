@@ -12,6 +12,9 @@ export default function Input(properties: InputProperties): React.JSX.Element {
                 appearance={properties.appearance}
                 contentAfter={properties.contentAfter}
                 contentBefore={properties.contentBefore}
+                name={properties.name}
+                onChange={properties.onChange}
+                placeholder={properties.placeholder}
                 type={properties.type ?? "text"}
                 value={properties.value}
             />
