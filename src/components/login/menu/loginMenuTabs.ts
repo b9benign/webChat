@@ -1,6 +1,6 @@
-import { TabListProperties } from "../tab-list/TabListProperties";
+import { TabListProperties } from "../../tab-list/TabListProperties";
 
-export const loginFormTabs = new Map([
+export const loginMenuTabs = new Map([
     ["signIn", { value: "signIn", content: "Sign in"}],
     ["signUp", { value: "signUp", content: "Sign up"}],
 ]) satisfies TabListProperties["tabs"];

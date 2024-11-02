@@ -22,9 +22,10 @@ export default function TabList(properties: TabListProperties): React.JSX.Elemen
             appearance={properties.appearance}
         >
             {
-                tabs?.map((tab) => {
+                tabs?.map((tab, index) => {
                     return (
                         <TabListTab
+                            key={index}
                             content={tab.content}
                             icon={tab.icon}
                             onClick={() => properties.onTabSelect(tab.value)}
