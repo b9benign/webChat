@@ -13,6 +13,7 @@ export default function Navigation(): React.JSX.Element {
     const { navigationWrapper } = useStyles();
 
     //implement FluentUI Nav (settings [mode, theme, perhaps font for the boomers], logout, OV of user-props)
+    //left: sidebar (fluentUI), right: persona with "available"-status + profile pic if photoURL
 
     return (
         <div className={navigationWrapper}>
