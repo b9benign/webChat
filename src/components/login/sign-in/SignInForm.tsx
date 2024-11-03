@@ -1,12 +1,13 @@
-import { Button, makeStyles, tokens } from "@fluentui/react-components";
+import { Button } from "@fluentui/react-components";
 import React from "react";
 import useToastContext from "../../../context/toast/useToastContext";
 import useFirebaseFunctions from "../../../services/firebase/functions/useFirebaseFunctions";
 import Input from "../../input/Input";
+import { useLoginStyles } from "../useLoginStyles";
 
 export default function SignInForm(): React.JSX.Element {
 
-    const { componentWrapper, formInputWrapper, buttonStyles, buttonWrapper } = useStyles();
+    const { componentWrapper, formInputWrapper, buttonStyles, buttonWrapper } = useLoginStyles();
     const { signInWithGooglePopup } = useFirebaseFunctions();
     const { dispatchInfo } = useToastContext();
 
@@ -31,6 +32,7 @@ export default function SignInForm(): React.JSX.Element {
                         appearance="underline"
                         placeholder="Email"
                         name="email"
+                        type="email"
                         onChange={handleChange}
                         value={formState.email}
                     />
@@ -63,27 +65,3 @@ export default function SignInForm(): React.JSX.Element {
         </div>
     )
 }
-
-const useStyles = makeStyles({
-    componentWrapper: {
-        minHeight: "100%",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between",
-        padding: "10px"
-    },
-    formInputWrapper: {
-        display: "flex",
-        flexDirection: "column",
-        gap: tokens.spacingVerticalXXL
-    },
-    buttonStyles: {
-        width: "48%"
-    },
-    buttonWrapper: {
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "space-between",
-        width: "100%"
-    }
-})
