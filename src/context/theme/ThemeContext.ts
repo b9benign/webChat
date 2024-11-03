@@ -2,7 +2,7 @@ import React from "react";
 import { ThemeValue } from "./ThemeValue";
 
 export type ThemeContext = {
-    mode: "dark" | "light",
+    mode: "dark" | "high-contrast" | "light",
     setMode(mode: ThemeContext["mode"]): void,
     setTheme(theme: ThemeValue): void
 }

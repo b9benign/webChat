@@ -9,14 +9,14 @@ const useStyles = makeStyles({
         minWidth: "100%",
         display: "flex",
         flexDirection: "column",
-        background: tokens.colorNeutralBackground1,
-        paddingBottom: tokens.spacingVerticalXXXL
+        background: tokens.colorNeutralBackground2,
     },
     contentWrapper: {
         width: "90%",
         minWidth: "300px",
         minHeight: "100vh",
         margin: "0 auto 0 auto",
+        paddingBottom: tokens.spacingVerticalXXXL,
         position: "relative",
     }
 })

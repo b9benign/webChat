@@ -1,6 +1,8 @@
-import { Avatar, makeStyles, tokens } from "@fluentui/react-components";
+import { makeStyles, tokens } from "@fluentui/react-components";
 import React from "react";
 import useAuthenticationContext from "../../context/authentication/useAuthenticationContext";
+import UserMenu from "./user-menu/UserMenu";
+import NavigationMenu from "./navigation-menu/NavigationMenu";
 
 export default function Navigation(): React.JSX.Element {
 
@@ -12,21 +14,8 @@ export default function Navigation(): React.JSX.Element {
     return (
         <div className={navigationWrapper}>
             <div className={contentWrapper}>
-                <div>
-                    {/* <NavigationMenu /> */}
-                </div>
-                <div>
-                    {userCredentials
-                        ? <Avatar
-                            name={userCredentials.displayName ?? ""}
-                            color="colorful"
-                            size={32}
-                            badge={{ status: "available" }}
-                            image={{ src: userCredentials.photoURL ?? "", alt: "Your profile picture" }}
-                        />
-                        : null
-                    }
-                </div>
+                <NavigationMenu />
+                <UserMenu />
             </div>
         </div>
     )
