@@ -1,73 +1,79 @@
 import { Button } from "@fluentui/react-components";
-import Input from "../../input/Input";
-import { useLoginStyles } from "../useLoginStyles";
-import useToastContext from "../../../context/toast/useToastContext";
 import React from "react";
+import Input from "../../input/Input";
+import emailValidationRegex from "../emailValidationRegex";
+import { useLoginStyles } from "../useLoginStyles";
+import { signUpFormInputMap } from "./SignUpFormInputMap";
+import { SignUpFormInputName } from "./SignUpFormInputName";
+import { signUpFormInputNameValues } from "./signUpFormInputNameValues";
 
 export default function SignUpForm(): React.JSX.Element {
 
     const { componentWrapper, formInputWrapper, buttonStyles, buttonWrapper } = useLoginStyles();
-    const { dispatchInfo } = useToastContext();
-
-    const [formState, setFormState] = React.useState<{ email: string, password: string, username: string, confirmPassword: string }>({ email: "", password: "", confirmPassword: "", username: "" });
+    const [formState, setFormState] = React.useState({ email: "", password: "", confirmPassword: "", username: "" });
+    const [validationState, setValidationState] = React.useState({ email: "", password: "", confirmPassword: "", username: "" });
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        //signUpWithEmailAndPassword
-        //validate confirmPassword
-        //refactor <Button />; stop relying on Fluent-native Button + disabled flag
-        //give Inputs "required" flag and validation message
-        //improve formState types
-        //cleanup forms
+        //signUpWithEmailAndPassword()
     }
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
         const { name, value } = event.target;
-        setFormState({ ...formState, [name]: value });
+        setFormState((prev) => { return { ...prev, [name]: value } });
+        validateInput(event);
     }
+
+    function validateInput(event: React.ChangeEvent<HTMLInputElement>) {
+        const { name, value } = event.target;
+        setValidationState({ ...validationState, [name]: "" });
+        switch (name as SignUpFormInputName) {
+            case "confirmPassword":
+                if (value !== formState.password) setValidationState({ ...validationState, confirmPassword: "Passwords do not match" });
+                return;
+            case "email":
+                if ((!emailValidationRegex.test(value.trim()))) setValidationState({ ...validationState, email: "Invalid email format [you@example.com]" });
+                return;
+            case "password":
+                if (value.trim().length <= 7) setValidationState({ ...validationState, password: "Passwords should be a minimum of 8 characters." });
+                return;
+            case "username":
+                if (value.trim().length <= 3) setValidationState({ ...validationState, username: "Usernames should be a minimum of 4 characters." });
+                return;
+            default: return;
+        }
+    }
+
+    const formSubmittable = React.useMemo<boolean>(() => {
+        for (const input of signUpFormInputNameValues) {
+            if ((formState[input].trim().length <= 0) || (validationState[input].trim().length >= 1)) return false;
+        }
+        return true;
+    }, [validationState]);
 
     return (
         <div className={componentWrapper}>
 
             <form onSubmit={handleSubmit}>
                 <div className={formInputWrapper}>
-                    <Input
-                        appearance="underline"
-                        placeholder="Username"
-                        name="username"
-                        onChange={handleChange}
-                        value={formState.username}
-                    />
-                    <Input
-                        appearance="underline"
-                        placeholder="Email"
-                        name="email"
-                        type="email"
-                        onChange={handleChange}
-                        value={formState.password}
-                    />
-                    <Input
-                        appearance="underline"
-                        placeholder="Password"
-                        type="password"
-                        name="password"
-                        onChange={handleChange}
-                        value={formState.password}
-                    />
-                    <Input
-                        appearance="underline"
-                        placeholder="Confirm password"
-                        type="password"
-                        name="confirmPassword"
-                        onChange={handleChange}
-                        value={formState.password}
-                    />
+                    {
+                        Array.from(signUpFormInputMap.values()).map((individualProps, index) => {
+                            return (
+                                <Input
+                                    {...individualProps}
+                                    appearance="underline"
+                                    key={index}
+                                    onChange={handleChange}
+                                    onBlur={validateInput}
+                                    required
+                                    validationMessage={validationState[individualProps.name]}
+                                    value={formState[individualProps.name]}
+                                />
+                            )
+                        })
+                    }
                     <div className={buttonWrapper}>
-                        <Button
-                            appearance="primary"
-                            onClick={() => dispatchInfo({ primaryContent: "Coming soon!" })}
-                            className={buttonStyles}
-                        >
+                        <Button appearance="primary" className={buttonStyles} disabled={!formSubmittable} type="submit">
                             Sign up
                         </Button>
                     </div>

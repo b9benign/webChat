@@ -1,4 +1,4 @@
-import { Button } from "@fluentui/react-components";
+import Button from "../../components/button/Button";
 import Page from "../../components/page/Page";
 import useFirebaseFunctions from "../../services/firebase/functions/useFirebaseFunctions";
 
