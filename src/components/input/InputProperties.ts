@@ -6,8 +6,10 @@ export type InputProperties =
         | "contentAfter"
         | "contentBefore"
         | "name"
+        | "onBlur"
         | "onChange"
         | "placeholder"
+        | "required"
         | "type"
         | "value">
-    & Pick<FieldProps, "label">
+    & Pick<FieldProps, "label" | "validationMessage" | "validationState">
