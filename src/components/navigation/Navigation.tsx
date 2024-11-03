@@ -1,23 +1,50 @@
-import { makeStyles } from "@fluentui/react-components";
+import { Avatar, makeStyles, tokens } from "@fluentui/react-components";
 import React from "react";
-
-
-const useStyles = makeStyles({
-    navigationWrapper: {
-        border: "1px solid green"
-    }
-});
+import useAuthenticationContext from "../../context/authentication/useAuthenticationContext";
 
 export default function Navigation(): React.JSX.Element {
 
-    const { navigationWrapper } = useStyles();
+    const { navigationWrapper, contentWrapper } = useStyles();
+    const { userCredentials } = useAuthenticationContext();
 
-    //implement FluentUI Nav (settings [mode, theme, perhaps font for the boomers], logout, OV of user-props)
-    //left: sidebar (fluentUI), right: persona with "available"-status + profile pic if photoURL
+    console.log(userCredentials);
 
     return (
         <div className={navigationWrapper}>
-            nav
+            <div className={contentWrapper}>
+                <div>
+                    {/* <NavigationMenu /> */}
+                </div>
+                <div>
+                    {userCredentials
+                        ? <Avatar
+                            name={userCredentials.displayName ?? ""}
+                            color="colorful"
+                            size={32}
+                            badge={{ status: "available" }}
+                            image={{ src: userCredentials.photoURL ?? "", alt: "Your profile picture" }}
+                        />
+                        : null
+                    }
+                </div>
+            </div>
         </div>
     )
 }
+
+const useStyles = makeStyles({
+    navigationWrapper: {
+        height: "50px",
+        backgroundColor: tokens.colorNeutralBackground3,
+        boxShadow: tokens.shadow16
+    },
+    contentWrapper: {
+        width: "90%",
+        margin: "auto",
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        height: "100%"
+    }
+});

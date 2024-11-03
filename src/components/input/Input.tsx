@@ -22,6 +22,7 @@ export default function Input(properties: InputProperties): React.JSX.Element {
                 required={properties.required}
                 type={properties.type ?? "text"}
                 value={properties.value}
+                autoComplete="on"
             />
         </Field>
     )

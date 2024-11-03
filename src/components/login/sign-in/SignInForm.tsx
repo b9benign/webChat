@@ -32,7 +32,7 @@ export default function SignInForm(): React.JSX.Element {
         setValidationState({ ...validationState, [name]: "" });
         switch (name as SignInFormInputName) {
             case "email":
-                if ((!emailValidationRegex.test(value.trim()))) setValidationState({ ...validationState, email: "Invalid email format [you@example.com]" });
+                if ((!emailValidationRegex.test(value.trim()))) setValidationState({ ...validationState, email: "Invalid email format [you@example.com]." });
                 return;
             case "password":
                 if (value.trim().length <= 7) setValidationState({ ...validationState, password: "Passwords should be a minimum of 8 characters." });

@@ -29,10 +29,10 @@ export default function SignUpForm(): React.JSX.Element {
         setValidationState({ ...validationState, [name]: "" });
         switch (name as SignUpFormInputName) {
             case "confirmPassword":
-                if (value !== formState.password) setValidationState({ ...validationState, confirmPassword: "Passwords do not match" });
+                if (value !== formState.password) setValidationState({ ...validationState, confirmPassword: "Passwords do not match." });
                 return;
             case "email":
-                if ((!emailValidationRegex.test(value.trim()))) setValidationState({ ...validationState, email: "Invalid email format [you@example.com]" });
+                if ((!emailValidationRegex.test(value.trim()))) setValidationState({ ...validationState, email: "Invalid email format [you@example.com]." });
                 return;
             case "password":
                 if (value.trim().length <= 7) setValidationState({ ...validationState, password: "Passwords should be a minimum of 8 characters." });
