@@ -1,50 +1,76 @@
-# React + TypeScript + Vite
+# ChatApp with React, TypeScript, and Firebase
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A simple chat application built with React, TypeScript, Firebase Authentication, and Firestore. This app allows users to sign up, log in, and chat in real-time. Messages are stored in Firestore, and authentication is managed through Firebase.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- User authentication (sign up, log in, log out)
+- Real-time chat using Firestore
+- Firebase Firestore database integration
+- Simple and clean UI
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **Frontend**: React, TypeScript, FluentUI
+- **Backend**: Firebase Authentication, Firestore (NoSQL database)
+- **Authentication**: Firebase Authentication
+- **Build Tool**: Vite
 
-- Configure the top-level `parserOptions` property like this:
+## Prerequisites
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+Before you begin, ensure you have the following installed:
+
+- **Node.js** (LTS version): [Install Node.js](https://nodejs.org/)
+- **npm** (comes with Node.js): To manage dependencies
+
+## Setup Instructions
+
+### 1 Clone the repository
+
+```bash
+git clone https://github.com/yourusername/chat-app.git .
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+### 2 Install dependencies
+```bash
+npm i
 ```
+
+### 3 Set up Firebase
+**3.1 Create a Firebase project**
+- Go to [Firebase console](https://console.firebase.google.com/)
+- Create a new project
+
+**3.2 Enable Firebase Authentication**
+- In the Firebase Console, navigate to Authentication > Sign-in method
+- Enable Email/Password authentication and authentication via Google as well as any other method you prefer
+
+**3.3 Set up Firestore**
+- In the Firebase Console, navigate to Firestore Database
+- Create a Firestore database in test mode (you can change the rules later for production)
+
+**3.4 Connect your code and Firebase projects**
+- find your Firebase config in your Project settings > Web API Key
+- create a .env at the root of your code project and pass your Firebase config to it
+```bash
+VITE_FIREBASE_API_KEY=your-api-key
+VITE_FIREBASE_AUTH_DOMAIN=your-auth-domain
+VITE_FIREBASE_PROJECT_ID=your-project-id
+VITE_FIREBASE_STORAGE_BUCKET=your-storage-bucket
+VITE_FIREBASE_MESSAGING_SENDER_ID=your-messaging-sender-id
+VITE_FIREBASE_APP_ID=your-app-id
+VITE_FIREBASE_MEASUREMENT_ID=your-measurement-id
+```
+
+**3.5 Adjust Firestore permissions**
+
+- you may need to adjust your [Firestore Security Rules](https://firebase.google.com/docs/firestore/security/get-started?hl=en) to properly use your app
+
+
+### 4 Start your development server
+- navigate to the root of your project
+```bash
+npm run dev
+```
+- vite will, by default, start your app on [localhost:5173](http://localhost:5173)
+
