@@ -15,7 +15,7 @@ export default function Button(properties: React.PropsWithChildren<ButtonPropert
             disabled={properties.disabled}
             onClick={properties.onClick}
             size={properties.size}
-            as="button"
+            type={properties.isSubmitButton ? "submit" : "button"}
         >
             {properties.children}
         </FluentButton>

@@ -1,4 +1,3 @@
-import { Button } from "@fluentui/react-components";
 import React from "react";
 import Input from "../../input/Input";
 import emailValidationRegex from "../emailValidationRegex";
@@ -6,6 +5,7 @@ import { useLoginStyles } from "../useLoginStyles";
 import { signUpFormInputMap } from "./SignUpFormInputMap";
 import { SignUpFormInputName } from "./SignUpFormInputName";
 import { signUpFormInputNameValues } from "./signUpFormInputNameValues";
+import Button from "../../button/Button";
 
 export default function SignUpForm(): React.JSX.Element {
 
@@ -15,7 +15,7 @@ export default function SignUpForm(): React.JSX.Element {
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        //signUpWithEmailAndPassword()
+        //integrate firestore user-docs first
     }
 
     function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -35,7 +35,7 @@ export default function SignUpForm(): React.JSX.Element {
                 if ((!emailValidationRegex.test(value.trim()))) setValidationState({ ...validationState, email: "Invalid email format [you@example.com]." });
                 return;
             case "password":
-                if (value.trim().length <= 7) setValidationState({ ...validationState, password: "Passwords should be a minimum of 8 characters." });
+                if (value.trim().length <= 5) setValidationState({ ...validationState, password: "Passwords should be a minimum of 6 characters." });
                 return;
             case "username":
                 if (value.trim().length <= 3) setValidationState({ ...validationState, username: "Usernames should be a minimum of 4 characters." });
@@ -49,11 +49,10 @@ export default function SignUpForm(): React.JSX.Element {
             if ((formState[input].trim().length <= 0) || (validationState[input].trim().length >= 1)) return false;
         }
         return true;
-    }, [validationState]);
+    }, [validationState, formState]);
 
     return (
         <div className={componentWrapper}>
-
             <form onSubmit={handleSubmit}>
                 <div className={formInputWrapper}>
                     {
@@ -73,7 +72,7 @@ export default function SignUpForm(): React.JSX.Element {
                         })
                     }
                     <div className={buttonWrapper}>
-                        <Button appearance="primary" className={buttonStyles} disabled={!formSubmittable} type="submit">
+                        <Button appearance="primary" className={buttonStyles} disabled={!formSubmittable} isSubmitButton>
                             Sign up
                         </Button>
                     </div>
