@@ -58,6 +58,7 @@ VITE_FIREBASE_MESSAGING_SENDER_ID=your-messaging-sender-id
 VITE_FIREBASE_APP_ID=your-app-id
 VITE_FIREBASE_MEASUREMENT_ID=your-measurement-id
 ```
+##
 ** 5. Adjust Firestore permissions
 -- you may need to adjust your [Firestore Security Rules](https://firebase.google.com/docs/firestore/security/get-started?hl=en) to properly use your app
 
