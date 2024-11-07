@@ -11,7 +11,7 @@ A simple chat application built with React, TypeScript, Firebase Authentication,
 
 ## Tech Stack
 
-- **Frontend**: React, TypeScript
+- **Frontend**: React, TypeScript, FluentUI
 - **Backend**: Firebase Authentication, Firestore (NoSQL database)
 - **Authentication**: Firebase Authentication
 - **Build Tool**: Vite
