@@ -15,16 +15,18 @@ export default function UserMenu(): React.JSX.Element {
     return (
         <Menu>
             <MenuTrigger disableButtonEnhancement>
-                {userCredentials
-                    ? <Persona
-                        name={userCredentials.displayName ?? undefined}
-                        secondaryText="Available"
-                        presence={{ status: "available" }}
-                        textPosition="before"
-                        photoUrl={userCredentials.photoURL}
-                    />
-                    : null
-                }
+                <div>
+                    {userCredentials
+                        ? <Persona
+                            name={userCredentials.displayName ?? undefined}
+                            secondaryText="Available"
+                            presence={{ status: "available" }}
+                            textPosition="before"
+                            photoUrl={userCredentials.photoURL}
+                        />
+                        : null
+                    }
+                </div>
             </MenuTrigger>
             <MenuPopover>
                 <MenuItem icon={<Person20Regular />} onClick={() => dispatchInfo({ primaryContent: "Coming soon!" })}>
