@@ -49,7 +49,7 @@ npm i
 - In the Firebase Console, navigate to Firestore Database
 - Create a Firestore database in test mode (you can change the rules later for production)
 
-**3.4. Connect your code and Firebase projects**
+**3.4 Connect your code and Firebase projects**
 - find your Firebase config in your Project settings > Web API Key
 - create a .env at the root of your code project and pass your Firebase config to it
 ```bash
