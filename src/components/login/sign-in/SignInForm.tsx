@@ -1,30 +1,30 @@
 import React from "react";
-import useToastContext from "../../../context/toast/useToastContext";
 import useFirebaseFunctions from "../../../services/firebase/functions/useFirebaseFunctions";
-import Input from "../../input/Input";
-import { useLoginStyles } from "../useLoginStyles";
 import Button from "../../button/Button";
-import { signInFormInputMap } from "./signInFormInputMap";
+import Input from "../../input/Input";
 import emailValidationRegex from "../emailValidationRegex";
+import { useLoginStyles } from "../useLoginStyles";
+import { signInFormInputMap } from "./signInFormInputMap";
 import { SignInFormInputName } from "./SignInFormInputName";
+import signInFormInputNameValues from "./signInFormInputNameValues";
 
 export default function SignInForm(): React.JSX.Element {
 
     const { componentWrapper, formInputWrapper, buttonStyles, buttonWrapper } = useLoginStyles();
-    const { signInWithGooglePopup } = useFirebaseFunctions();
-    const { dispatchInfo } = useToastContext();
+    const { signInWithGooglePopup, signInWithEmailAndPassword } = useFirebaseFunctions();
 
-    const [formState, setFormState] = React.useState<{ email: string, password: string }>({ email: "", password: "" });
+    const [formState, setFormState] = React.useState({ email: "", password: "" });
     const [validationState, setValidationState] = React.useState({ email: "", password: "" });
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        //signInWithEmailAndPassword()
+        signInWithEmailAndPassword({ ...formState });
     }
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
         setFormState({ ...formState, [name]: value });
+        validateInput(event);
     }
 
     function validateInput(event: React.ChangeEvent<HTMLInputElement>) {
@@ -35,11 +35,18 @@ export default function SignInForm(): React.JSX.Element {
                 if ((!emailValidationRegex.test(value.trim()))) setValidationState({ ...validationState, email: "Invalid email format [you@example.com]." });
                 return;
             case "password":
-                if (value.trim().length <= 7) setValidationState({ ...validationState, password: "Passwords should be a minimum of 8 characters." });
+                if (value.trim().length <= 5) setValidationState({ ...validationState, password: "Passwords should be a minimum of 6 characters." });
                 return;
             default: return;
         }
     }
+
+    const formSubmittable = React.useMemo<boolean>(() => {
+        for (const input of signInFormInputNameValues) {
+            if ((formState[input].trim().length <= 0) || (validationState[input].trim().length >= 1)) return false;
+        }
+        return true;
+    }, [validationState, formState]);
 
     return (
         <div className={componentWrapper}>
@@ -65,15 +72,16 @@ export default function SignInForm(): React.JSX.Element {
                     <div className={buttonWrapper}>
                         <Button
                             appearance="outline"
-                            onClick={() => dispatchInfo({ primaryContent: "Coming soon!" })}
                             className={buttonStyles}
+                            disabled={!formSubmittable}
+                            isSubmitButton
                         >
                             Sign in
                         </Button>
                         <Button
+                            appearance="primary"
                             className={buttonStyles}
                             onClick={() => signInWithGooglePopup()}
-                            appearance="primary"
                         >
                             Google
                         </Button>

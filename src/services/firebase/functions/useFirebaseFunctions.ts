@@ -56,6 +56,8 @@ export default function useFirebaseFunctions(): FirebaseFunctions {
         }
     }
 
+    //TODO: firestore integration for sign-ups and user-doc creation
+
     return {
         signInWithGooglePopup,
         signInWithEmailAndPassword,
