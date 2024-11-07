@@ -1,6 +1,6 @@
 export type FirebaseFunctions = {
-    signInWithEmailAndPassword(): Promise<void>,
+    signInWithEmailAndPassword(args: { email: string, password: string }): Promise<void>,
     signInWithGooglePopup(): Promise<void>,
-    signUpWithEmailAndPassword(): Promise<void>,
+    signUpWithEmailAndPassword(args: { email: string, password: string }): Promise<void>,
     signOut(): Promise<void>
 }
