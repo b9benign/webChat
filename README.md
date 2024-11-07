@@ -1,50 +1,33 @@
-# React + TypeScript + Vite
+# ChatApp with React, TypeScript, and Firebase
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A simple chat application built with React, TypeScript, Firebase Authentication, and Firestore. This app allows users to sign up, log in, and chat in real-time. Messages are stored in Firestore, and authentication is managed through Firebase.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- User authentication (sign up, log in, log out)
+- Real-time chat using Firestore
+- Firebase Firestore database integration
+- Simple and clean UI
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **Frontend**: React, TypeScript
+- **Backend**: Firebase Authentication, Firestore (NoSQL database)
+- **Authentication**: Firebase Authentication
+- **Build Tool**: Vite
 
-- Configure the top-level `parserOptions` property like this:
+## Prerequisites
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+Before you begin, ensure you have the following installed:
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+- **Node.js** (LTS version): [Install Node.js](https://nodejs.org/)
+- **npm** (comes with Node.js): To manage dependencies
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+## Setup Instructions
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/yourusername/chat-app.git
+cd chat-app
+
