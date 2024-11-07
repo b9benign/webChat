@@ -46,7 +46,7 @@ npm i
 ** 3. Set up Firestore **
 - In the Firebase Console, navigate to Firestore Database
 - Create a Firestore database in test mode (you can change the rules later for production)
-** 4. Connect your code and Firebase projects
+** 4. Connect your code and Firebase projects **
 -- find your Firebase config in your Project settings > Web API Key
 -- create a .env at the root of your code project and pass your Firebase config to it
 ```bash
@@ -58,8 +58,8 @@ VITE_FIREBASE_MESSAGING_SENDER_ID=your-messaging-sender-id
 VITE_FIREBASE_APP_ID=your-app-id
 VITE_FIREBASE_MEASUREMENT_ID=your-measurement-id
 ```
-##
-** 5. Adjust Firestore permissions
+
+** 5. Adjust Firestore permissions **
 -- you may need to adjust your [Firestore Security Rules](https://firebase.google.com/docs/firestore/security/get-started?hl=en) to properly use your app
 
 ### 4. Start your development server
