@@ -95,7 +95,7 @@ export default function UserMenu(): React.JSX.Element {
               <MenuItem>Theme</MenuItem>
             </MenuTrigger>
             <MenuPopover>
-              <MenuList checkedValues={{ "theme": [theme] }}>
+              {/* <MenuList checkedValues={{ "theme": [theme] }}> */}
                 {brandVariantValues.map((variant, index) => {
                   return (
                     <MenuItemRadio
@@ -109,7 +109,7 @@ export default function UserMenu(): React.JSX.Element {
                     </MenuItemRadio>
                   );
                 })}
-              </MenuList>
+              {/* </MenuList> */}
             </MenuPopover>
           </Menu>
 
