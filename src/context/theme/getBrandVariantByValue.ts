@@ -1,8 +1,8 @@
 import { BrandVariants } from "@fluentui/react-components";
-import { ThemeValue } from "./ThemeValue";
 import { blueVariant, greenVariant, orangeVariant, purpleVariant } from "./brandVariants";
+import { BrandVariantValue } from "./brandVariantValues";
 
-export default function getBrandVariantByThemeValue(themeValue: ThemeValue): BrandVariants {
+export default function getBrandVariantByThemeValue(themeValue: BrandVariantValue): BrandVariants {
     switch (themeValue) {
         case "blue": return blueVariant;
         case "green": return greenVariant;
