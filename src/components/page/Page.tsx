@@ -9,7 +9,7 @@ const useStyles = makeStyles({
         minWidth: "100%",
         display: "flex",
         flexDirection: "column",
-        background: tokens.colorNeutralBackground2,
+        background: tokens.colorNeutralBackground1,
     },
     contentWrapper: {
         width: "90%",
