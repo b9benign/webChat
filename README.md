@@ -2,6 +2,8 @@
 
 A simple chat application built with React, TypeScript, Firebase Authentication, and Firestore. This app allows users to sign up, log in, and chat in real-time. Messages are stored in Firestore, and authentication is managed through Firebase.
 
+**Current live version:'' t.b.d.
+
 ## Features
 
 - User authentication (sign up, log in, log out)
