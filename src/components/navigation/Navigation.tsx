@@ -1,16 +1,12 @@
 import { makeStyles, tokens } from "@fluentui/react-components";
 import React from "react";
-import useAuthenticationContext from "../../context/authentication/useAuthenticationContext";
-import UserMenu from "./user-menu/UserMenu";
 import NavigationMenu from "./navigation-menu/NavigationMenu";
+import UserMenu from "./user-menu/UserMenu";
 
 export default function Navigation(): React.JSX.Element {
 
     const { navigationWrapper, contentWrapper } = useStyles();
-    const { userCredentials } = useAuthenticationContext();
-
-    console.log(userCredentials);
-
+    
     return (
         <div className={navigationWrapper}>
             <div className={contentWrapper}>

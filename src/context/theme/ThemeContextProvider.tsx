@@ -7,7 +7,7 @@ import { BrandVariantValue } from "./brandVariantValues";
 export default function ThemeContextProvider(properties: React.PropsWithChildren): React.JSX.Element {
 
     const [mode, setMode] = React.useState<ThemeContext["mode"]>("dark");
-    const [theme, setTheme] = React.useState<BrandVariantValue>("green");
+    const [theme, setTheme] = React.useState<BrandVariantValue>("purple");
 
     const appliedTheme = React.useMemo<Theme>(() => {
         if (mode === "dark") return { ...createDarkTheme(getBrandVariantByThemeValue(theme)) };
@@ -19,6 +19,7 @@ export default function ThemeContextProvider(properties: React.PropsWithChildren
         mode,
         setMode,
         setTheme,
+        theme
     };
 
     return (

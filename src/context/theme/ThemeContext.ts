@@ -1,11 +1,12 @@
 import React from "react";
-import { ThemeValue } from "./ThemeValue";
+import { ThemeModeValue } from "./ThemeModeValue";
 import { BrandVariantValue } from "./brandVariantValues";
 
 export type ThemeContext = {
-  mode: ThemeValue;
-  setMode(mode: ThemeContext["mode"]): void;
-  setTheme(theme: BrandVariantValue): void;
+  mode: ThemeModeValue,
+  setMode(mode: ThemeContext["mode"]): void,
+  setTheme(theme: BrandVariantValue): void,
+  theme: BrandVariantValue
 };
 
 export const themeContext = React.createContext<ThemeContext | null>(null);
