@@ -6,7 +6,7 @@ export default function Persona(properties: PersonaProperties): React.JSX.Elemen
 
     const { personaStyles } = useStyles();
 
-    return (
+    return (            
         <FluentPersona
             avatar={{
                 image: { src: properties.photoUrl ?? undefined, role: "img" },

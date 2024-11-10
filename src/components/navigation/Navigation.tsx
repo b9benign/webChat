@@ -20,11 +20,11 @@ export default function Navigation(): React.JSX.Element {
 const useStyles = makeStyles({
     navigationWrapper: {
         height: "50px",
-        backgroundColor: tokens.colorNeutralBackground3,
+        backgroundColor: tokens.colorNeutralBackground1,
         boxShadow: tokens.shadow16
     },
     contentWrapper: {
-        width: "90%",
+        width: "98%",
         margin: "auto",
         display: "flex",
         flexDirection: "row",

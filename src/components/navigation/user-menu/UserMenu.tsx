@@ -1,4 +1,4 @@
-import { makeStyles, Menu, MenuDivider, MenuItem, MenuItemRadio, MenuList, MenuPopover, MenuTrigger, tokens } from "@fluentui/react-components";
+import { makeStyles, Menu, MenuDivider, MenuItem, MenuItemRadio, MenuList, MenuPopover, MenuTrigger, tokens, Tooltip } from "@fluentui/react-components";
 import { ArrowExit20Regular, Color20Regular, Lightbulb20Regular, Person20Regular, Settings32Regular } from "@fluentui/react-icons";
 import React from "react";
 import useAuthenticationContext from "../../../context/authentication/useAuthenticationContext";
@@ -7,6 +7,7 @@ import { BrandVariantValue, brandVariantValues } from "../../../context/theme/br
 import useThemeContext from "../../../context/theme/useThemeContext";
 import useToastContext from "../../../context/toast/useToastContext";
 import useFirebaseFunctions from "../../../services/firebase/functions/useFirebaseFunctions";
+import Button from "../../button/Button";
 import Persona from "../../persona/Persona";
 
 export default function UserMenu(): React.JSX.Element {
@@ -36,20 +37,25 @@ export default function UserMenu(): React.JSX.Element {
 	return (
 		<Menu>
 			<MenuTrigger disableButtonEnhancement>
-				<div>
-					{userCredentials
-						? <Persona
-							name={userCredentials.displayName ?? undefined}
-							secondaryText="Available"
-							presence={{ status: "available" }}
-							textPosition="before"
-							photoUrl={userCredentials.photoURL}
-						/>
-						: <Settings32Regular
-							color={tokens.colorNeutralForeground2}
-							className={gearStyles}
-						/>}
-				</div>
+				<Tooltip content="Settings" relationship="label">
+					<div>
+						{userCredentials
+							? <Persona
+								name={userCredentials.displayName ?? undefined}
+								secondaryText="Available"
+								presence={{ status: "available" }}
+								textPosition="before"
+								photoUrl={userCredentials.photoURL}
+							/>
+							: <Button
+								className={gearStyles}
+								appearance="subtle"
+								icon={<Settings32Regular />}
+								size="large"
+							/>}
+					</div>
+				</Tooltip>
+
 			</MenuTrigger>
 			<MenuPopover>
 				<MenuList>
