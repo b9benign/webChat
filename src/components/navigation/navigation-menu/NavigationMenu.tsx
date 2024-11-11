@@ -1,15 +1,19 @@
-import { makeStyles, tokens, Tooltip } from "@fluentui/react-components";
-import { Hamburger, NavDrawer, NavDrawerBody, NavDrawerHeader, NavItem } from "@fluentui/react-nav-preview";
+import { makeStyles, MenuDivider, tokens, Tooltip } from "@fluentui/react-components";
+import { Code20Regular, Globe20Regular, Home20Regular, Info20Regular, Person20Regular } from "@fluentui/react-icons";
+import { People20Regular } from "@fluentui/react-icons/fonts";
+import { Hamburger, NavCategory, NavDrawer, NavDrawerBody, NavDrawerHeader, NavItem, NavSectionHeader } from "@fluentui/react-nav-preview";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function NavigationMenu(): React.JSX.Element {
 
-    const { navWrapper } = useStyles();
+    const { navWrapper, bodyStyles } = useStyles();
     const [isOpen, setIsOpen] = React.useState<boolean>(false);
+    const navigate = useNavigate();
 
     return (
         <React.Fragment>
-            <Hamburger onClick={() => setIsOpen(!isOpen)} appearance="subtle" size="large"/>
+            <Hamburger onClick={() => setIsOpen(!isOpen)} appearance="subtle" size="large" />
             <div className={navWrapper}>
                 <NavDrawer
                     open={isOpen}
@@ -20,10 +24,25 @@ export default function NavigationMenu(): React.JSX.Element {
                         <NavHeader onClick={() => setIsOpen(!isOpen)} />
                     </NavDrawerHeader>
 
-                    <NavDrawerBody>
-                        <NavItem value="1">Test</NavItem>
-                        <NavItem value="2">Test</NavItem>
-                        <NavItem value="3">Test</NavItem>
+                    <NavDrawerBody className={bodyStyles}>
+                        <div>
+                            <NavItem value="home" onClick={() => navigate("/")} icon={<Home20Regular />}>Home</NavItem>
+                            <NavSectionHeader>Chats</NavSectionHeader>
+                            <NavCategory value="chats">
+                                <NavItem value="global" onClick={() => navigate("/chats/global")} icon={<Globe20Regular />}>Global</NavItem>
+                                <NavItem value="groups" onClick={() => navigate("chats/groups")} icon={<People20Regular />}>Groups</NavItem>
+                                <NavItem value="individual" onClick={() => navigate("chats/individuals")} icon={<Person20Regular />}>Individuals</NavItem>
+                            </NavCategory>
+                        </div>
+                        <div>
+                            <MenuDivider />
+                            <NavCategory value="external">
+                                <NavItem value="about" icon={<Info20Regular />} onClick={() => navigate("/about")}>About</NavItem>
+                                <NavItem value="external" icon={<Code20Regular />} href="https://github.com/b9benign/webChat" target="_blank">Repository</NavItem>
+                            </NavCategory>
+                        </div>
+
+
 
                     </NavDrawerBody>
 
@@ -36,14 +55,14 @@ export default function NavigationMenu(): React.JSX.Element {
 }
 
 
-
 //The following functions bear no functional advantages,
 //their only purpose is to provide structural clarity
 
 const NavHeader = ({ onClick }: { onClick(): void }): React.JSX.Element => {
+    const { hamburgerStyles } = useStyles();
     return (
         <Tooltip content="Navigation" relationship="label">
-                <Hamburger onClick={onClick} />
+            <Hamburger onClick={onClick} className={hamburgerStyles}/>
         </Tooltip>
     );
 }
@@ -54,18 +73,14 @@ const useStyles = makeStyles({
         display: "flex",
         height: "600px",
     },
-    content: {
-        flex: "1",
-        padding: "16px",
-        display: "grid",
-        justifyContent: "flex-start",
-        alignItems: "flex-start",
-    },
-    field: {
+    bodyStyles: {
         display: "flex",
-        marginTop: "4px",
-        marginLeft: "8px",
         flexDirection: "column",
-        gridRowGap: tokens.spacingVerticalS,
+        justifyContent: "space-between",
+        padding: tokens.spacingVerticalS,
+        paddingLeft: tokens.spacingVerticalM
     },
+    hamburgerStyles: {
+        margin: "5px 0 0 -6px"
+    }
 });
