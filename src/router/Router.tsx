@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import LoginPage from "../pages/login/LoginPage";
 import useAuthenticationContext from "../context/authentication/useAuthenticationContext";
 import NotFoundPage from "../pages/not-found/NotFoundPage";
+import getChatsRouter from "./chats/getChatsRouter";
 
 export default function Router(): React.JSX.Element {
 
@@ -10,11 +11,9 @@ export default function Router(): React.JSX.Element {
     return (
         <BrowserRouter>
             <Routes>
-                {
-                    userCredentials
-                        ? <Route path="*" element={<NotFoundPage />} />
-                        : <Route path="*" element={<LoginPage />} />
-                }
+                {!userCredentials && <Route path="*" element={<LoginPage />}/>}
+                {getChatsRouter()}
+                <Route path="*" element={<NotFoundPage />} />
             </Routes>
         </BrowserRouter>
     )

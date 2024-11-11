@@ -25,6 +25,5 @@ export default function Button(properties: React.PropsWithChildren<ButtonPropert
 const useStyles = makeStyles({
     buttonStyles: {
         width: "100%",
-        minWidth: "100px"
     }
 })
