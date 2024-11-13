@@ -14,7 +14,7 @@ export default function Router(): React.JSX.Element {
             <Routes>
                 {!userCredentials && <Route path="*" element={<LoginPage />}/>}
                 {getChatsRouter()}
-                <Route path="" element={<HomePage />} />
+                {userCredentials && <Route path="/" element={<HomePage />} />}
                 <Route path="*" element={<NotFoundPage />} />
             </Routes>
         </BrowserRouter>
