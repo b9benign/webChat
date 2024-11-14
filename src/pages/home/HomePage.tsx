@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 export default function HomePage(): React.JSX.Element {
 
     const styles = useStyles();
+    const navigate = useNavigate(); 
 
 	return (
 		<Page documentTitle="Web Chat Home">
@@ -28,13 +29,25 @@ export default function HomePage(): React.JSX.Element {
 
         <section className={styles.section}>
           <h2 className={styles.sectionTitle}>Letzte Chats</h2>
+          <p className={styles.text}>
+            Hier kannst du deine letzten Unterhaltungen direkt weiterführen!
+          </p>
           <div className={styles.ChatContainer}>
             <GlobalChat title="Global Chat" />
-            <div className={styles.Devider}/>
+            <div className={styles.Divider}/>
             <Chat title="Chat 1" />
             <Chat title="Chat 2" />
             <Chat title="Chat 3" />
+            <Chat title="Chat 4" />
+            <Chat title="Chat 5" />
           </div>
+        </section>
+
+        <section className={styles.section}>
+          <h2 className={styles.sectionTitle}>Noch Fragen?</h2>
+          <p className={styles.text}>
+            Dann findest du <a className={styles.Link} onClick={() => navigate("/about")}>hier</a> alles was du über uns wissen musst. Falls du Hilfe brauchst dann schreib unserem Support!
+          </p>
         </section>
       </main>
 
@@ -74,34 +87,41 @@ const Chat: React.FC<ChatProps> = ({ title }) => {
 };
 const useStyles = makeStyles({
     ChatFrame: {
-        border: '1px solid white',
-        borderRadius: '10px',
-        padding: tokens.spacingHorizontalXXL,
-        width: '200px',
-        margin: tokens.spacingHorizontalM,
-        cursor: "pointer"
+      borderLeftColor: tokens.colorNeutralBackground1,
+      border: '2px solid',
+      borderRadius: '10px',
+      padding: tokens.spacingHorizontalXXL,
+      width: '200px',
+      margin: tokens.spacingHorizontalM,
+      cursor: "pointer"
     },
     Icon: {
-        margin: tokens.spacingHorizontalXXS,
-        marginTop: tokens.spacingHorizontalL,
-        marginBottom: tokens.spacingHorizontalL
+      margin: tokens.spacingHorizontalXXS,
+      marginTop: tokens.spacingHorizontalL,
+      marginBottom: tokens.spacingHorizontalL
     },
     IconName:{
-        fontSize: '1.5em',
-        color: tokens.colorBrandForeground1,
-        marginBottom: tokens.spacingHorizontalS
+      fontSize: '1.5em',
+      color: tokens.colorBrandForeground1,
+      marginBottom: tokens.spacingHorizontalS
     },
-    Devider: {
-        borderLeft: "1px solid white",
-        minHeight: "100px"
+    Divider: {
+      borderLeftColor: tokens.colorNeutralBackground1,
+      borderLeft: "2px solid",
+      minHeight: "100px"
     },
     ChatContainer: {
-        display: 'flex',
-        justifyContent: 'center',
-        gap: '20px',
-        flexWrap: 'wrap',
-        padding: tokens.spacingHorizontalXL
-      },
+      display: 'flex',
+      justifyContent: 'center',
+      gap: '20px',
+      flexWrap: 'wrap',
+      padding: tokens.spacingHorizontalXL
+    },
+    Link: {
+      cursor: "pointer",
+      textDecoration: "underline",
+      color: tokens.colorBrandForeground1
+    },
     /*  */
     container: {
       fontFamily: 'Arial, sans-serif',
