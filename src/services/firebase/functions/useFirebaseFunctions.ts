@@ -16,7 +16,7 @@ export default function useFirebaseFunctions(): FirebaseFunctions {
             const result = await signInWithPopup(firebase, provider);
             createUserDocument({ userCredential: result });
             dispatchSuccess({ primaryContent: `Signed in as ${result.user.displayName}` });
-        } catch (e: any) {
+        } catch (e: unknown) {
             dispatchError({ primaryContent: "Login has failed. Code 155dfa48-6339-47e0-96f7-f28205a3a866" });
             console.error(e);
         }
@@ -26,7 +26,7 @@ export default function useFirebaseFunctions(): FirebaseFunctions {
         try {
             await fireBaseSignOut(firebase);
             window.location.reload();
-        } catch (e: any) {
+        } catch (e: unknown) {
             dispatchError({ primaryContent: "Login has failed. Code 23925f57-5467-4ec7-ae60-31e9f7e9cbde" });
             console.error(e);
         }
@@ -40,7 +40,7 @@ export default function useFirebaseFunctions(): FirebaseFunctions {
         try {
             const result = await createUserWithEmailAndPassword(firebase, email, password);
             await createUserDocument({ userCredential: result, displayName });
-        } catch (e: any) {
+        } catch (e: unknown) {
             dispatchError({ primaryContent: "Account creation has failed. Code 9768677f-382c-472f-be1e-7e5f97c6aac2" });
             console.error(e);
         }
@@ -54,7 +54,7 @@ export default function useFirebaseFunctions(): FirebaseFunctions {
         try {
             const result = await firebaseSignInWithEmailAndPassword(firebase, email, password);
             dispatchSuccess({ primaryContent: `Signed in as ${result.user.displayName}` });
-        } catch (e: any) {
+        } catch (e: unknown) {
             dispatchError({ primaryContent: "Login has failed. Code 04da9b24-9d14-4503-a029-11c5b681e7e8" });
             console.error(e);
         }
@@ -76,7 +76,7 @@ export default function useFirebaseFunctions(): FirebaseFunctions {
                     uid: user.uid
                 } satisfies FirestoreUser);
                 dispatchSuccess({ primaryContent: "Account created successfully!" });
-            } catch (e: any) {
+            } catch (e: unknown) {
                 dispatchError({ primaryContent: "Database error upon account creation. Code a9304444-cbc7-4c61-aaa0-9edbf77477fd" });
                 console.error(e);
             }

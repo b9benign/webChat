@@ -46,7 +46,7 @@ export default function UserMenu(): React.JSX.Element {
 									secondaryText="Available"
 									presence={{ status: "available" }}
 									textPosition="before"
-									photoUrl={userCredentials.photoURL}
+									photoUrl={userCredentials.photoUrl}
 									className={personaStyles}
 								/>
 								: <Button
