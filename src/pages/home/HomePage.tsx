@@ -6,8 +6,8 @@ import { useNavigate } from "react-router-dom";
 
 export default function HomePage(): React.JSX.Element {
 
-    const styles = useStyles();
-    const navigate = useNavigate(); 
+  const styles = useStyles();
+  const navigate = useNavigate(); 
 
 	return (
 		<Page documentTitle="Web Chat Home">
@@ -33,13 +33,13 @@ export default function HomePage(): React.JSX.Element {
             Hier kannst du deine letzten Unterhaltungen direkt weiterführen!
           </p>
           <div className={styles.ChatContainer}>
-            <GlobalChat title="Global Chat" />
+            <Chat title="Global Chat" path="/chats/global"/>
             <div className={styles.Divider}/>
-            <Chat title="Chat 1" />
-            <Chat title="Chat 2" />
-            <Chat title="Chat 3" />
-            <Chat title="Chat 4" />
-            <Chat title="Chat 5" />
+            <Chat title="Chat 1" path="/chats/individuals"/>
+            <Chat title="Chat 2" path="/chats/individuals"/>
+            <Chat title="Chat 3" path="/chats/individuals"/>
+            <Chat title="Chat 4" path="/chats/individuals"/>
+            <Chat title="Chat 5" path="/chats/individuals" />
           </div>
         </section>
 
@@ -63,24 +63,15 @@ export default function HomePage(): React.JSX.Element {
 
 interface ChatProps {
     title: string;
+    path: string;
 }
 
-const GlobalChat: React.FC<ChatProps> = ({ title}) => {
-    const styles = useStyles()
-    const navigate = useNavigate(); 
+const Chat: React.FC<ChatProps> = ({ title, path }) => {
+  const styles = useStyles()
+  const navigate = useNavigate()
     return(
-        <div className={styles.ChatFrame} onClick={() => navigate("/chats/global")}>
-            <Globe48Regular className={styles.Icon}/>
-            <h3 className={styles.IconName}>{title}</h3>
-        </div>
-    )
-};
-const Chat: React.FC<ChatProps> = ({ title }) => {
-    const styles = useStyles()
-    const navigate = useNavigate();  
-    return(
-        <div className={styles.ChatFrame} onClick={() => navigate("/chats/individuals")}>
-            <Person48Regular className={styles.Icon}/>
+        <div className={styles.ChatFrame} onClick={() => navigate(path)}>
+            {path.includes("global") ? <Globe48Regular className={styles.Icon}/> : <Person48Regular className={styles.Icon}/>}
             <h3 className={styles.IconName}>{title}</h3>
         </div>
     )
@@ -134,6 +125,7 @@ const useStyles = makeStyles({
       backgroundColor: tokens.colorBrandForeground1,
       padding: '50px 0',
       color: tokens.colorNeutralBackgroundInverted,
+      minHeight: "10%",
     },
     title: {
       fontSize: '3em',
@@ -145,6 +137,7 @@ const useStyles = makeStyles({
     },
     main: {
       padding: tokens.spacingHorizontalL,
+      minHeight: "70%", 
     },
     section: {
       marginTop: tokens.spacingHorizontalXXXL,
