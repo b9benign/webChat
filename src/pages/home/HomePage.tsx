@@ -74,8 +74,8 @@ const Chat: React.FC<ChatProps> = ({ title }) => {
 };
 const useStyles = makeStyles({
     ChatFrame: {
-        border: '1px solid #ddd',
-        borderRadius: '8px',
+        border: '1px solid white',
+        borderRadius: '10px',
         padding: tokens.spacingHorizontalXXL,
         width: '200px',
         margin: tokens.spacingHorizontalM,
@@ -83,13 +83,12 @@ const useStyles = makeStyles({
     },
     Icon: {
         margin: tokens.spacingHorizontalXXS,
-        maxWidth: "100%",
         marginTop: tokens.spacingHorizontalL,
         marginBottom: tokens.spacingHorizontalL
     },
     IconName:{
         fontSize: '1.5em',
-        color: '#4CAF50', /* color based on Theme */
+        color: tokens.colorBrandForeground1,
         marginBottom: tokens.spacingHorizontalS
     },
     Devider: {
@@ -105,43 +104,43 @@ const useStyles = makeStyles({
       },
     /*  */
     container: {
-        fontFamily: 'Arial, sans-serif',
-        color: '#333',
-        textAlign: 'center',
-        margin: 0,
-        padding: 0,
-      },
-      header: {
-        backgroundColor: '#4CAF50', /* color based on Theme */
-        padding: '50px 0',
-        color: 'white',
-      },
-      title: {
-        fontSize: '3em',
-        margin: tokens.spacingHorizontalS,
-      },
-      subtitle: {
-        fontSize: '1.5em',
-        marginTop: tokens.spacingHorizontalL,
-      },
-      main: {
-        padding: tokens.spacingHorizontalL,
-      },
-      section: {
-        marginTop: tokens.spacingHorizontalXXXL,
-        marginBottom: tokens.spacingHorizontalXXXL,
-      },
-      sectionTitle: {
-        fontSize: '2em',
-        color: '#4CAF50', /* color based on Theme */
-        margin: tokens.spacingHorizontalXXL
-      },
-      text: {
-        fontSize: '1.2em',
-      },
-      footer: {
-        backgroundColor: '#333',
-        color: 'white',
-        padding: '20px 0',
-      },
+      fontFamily: 'Arial, sans-serif',
+      color: tokens.colorNeutralBackgroundInverted,
+      textAlign: 'center',
+      margin: 0,
+      padding: 0,
+    },
+    header: {
+      backgroundColor: tokens.colorBrandForeground1,
+      padding: '50px 0',
+      color: tokens.colorNeutralBackgroundInverted,
+    },
+    title: {
+      fontSize: '3em',
+      margin: tokens.spacingHorizontalS,
+    },
+    subtitle: {
+      fontSize: '1.5em',
+      marginTop: tokens.spacingHorizontalL,
+    },
+    main: {
+      padding: tokens.spacingHorizontalL,
+    },
+    section: {
+      marginTop: tokens.spacingHorizontalXXXL,
+      marginBottom: tokens.spacingHorizontalXXXL,
+    },
+    sectionTitle: {
+      fontSize: '2em',
+      color: tokens.colorBrandForeground1,
+      margin: tokens.spacingHorizontalXXL
+    },
+    text: {
+      fontSize: '1.2em',
+    },
+    footer: {
+      backgroundColor: tokens.colorNeutralBackgroundInverted,
+      color: tokens.colorBrandForeground1,
+      padding: '20px 0',
+    },
 })
