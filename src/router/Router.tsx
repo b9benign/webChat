@@ -6,7 +6,7 @@ import getChatsRouter from "./chats/getChatsRouter";
 
 export default function Router(): React.JSX.Element {
 
-    const { userCredentials } = useAuthenticationContext();
+    const { user: userCredentials } = useAuthenticationContext();
 
     return (
         <BrowserRouter>

@@ -12,7 +12,7 @@ import Persona from "../../persona/Persona";
 
 export default function UserMenu(): React.JSX.Element {
 
-	const { userCredentials } = useAuthenticationContext();
+	const { user: userCredentials } = useAuthenticationContext();
 	const { signOut } = useFirebaseFunctions();
 	const { dispatchInfo } = useToastContext();
 	const { gearStyles, personaStyles } = useStyles();
