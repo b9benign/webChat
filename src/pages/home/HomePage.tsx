@@ -1,8 +1,9 @@
 import React from "react";
 import { makeStyles, tokens } from "@fluentui/react-components";
 import Page from "../../components/page/Page";
-import { Globe48Regular, Person48Regular } from "@fluentui/react-icons";
+import { Globe32Regular, Globe48Regular, Person48Regular } from "@fluentui/react-icons";
 import { useNavigate } from "react-router-dom";
+import { DefaultCard } from "../../components/card/Card";
 
 export default function HomePage(): React.JSX.Element {
 
@@ -32,21 +33,22 @@ export default function HomePage(): React.JSX.Element {
           <p className={styles.text}>
             Hier kannst du deine letzten Unterhaltungen direkt weiterführen!
           </p>
-          <div className={styles.ChatContainer}>
+          <div className={styles.chatContainer}>
             <Chat title="Global Chat" path="/chats/global"/>
-            <div className={styles.Divider}/>
+            <div className={styles.divider}/>
             <Chat title="Chat 1" path="/chats/individuals"/>
-            <Chat title="Chat 2" path="/chats/individuals"/>
+{/*             <Chat title="Chat 2" path="/chats/individuals"/>
             <Chat title="Chat 3" path="/chats/individuals"/>
             <Chat title="Chat 4" path="/chats/individuals"/>
-            <Chat title="Chat 5" path="/chats/individuals" />
+            <Chat title="Chat 5" path="/chats/individuals"/> */}
+            <DefaultCard header={"Global"} image={<Globe32Regular />} description={"Chatte mit Allen... ALLEN!"} onClick={() => navigate("/chats/global")}></DefaultCard>
           </div>
         </section>
 
         <section className={styles.section}>
           <h2 className={styles.sectionTitle}>Noch Fragen?</h2>
           <p className={styles.text}>
-            Dann findest du <a className={styles.Link} onClick={() => navigate("/about")}>hier</a> alles was du über uns wissen musst. Falls du Hilfe brauchst dann schreib unserem Support!
+            Dann findest du <a className={styles.link} onClick={() => navigate("/about")}>hier</a> alles was du über uns wissen musst. Falls du Hilfe brauchst dann schreib unserem Support!
           </p>
         </section>
       </main>
@@ -66,18 +68,18 @@ interface ChatProps {
     path: string;
 }
 
-const Chat: React.FC<ChatProps> = ({ title, path }) => {
+function Chat({ title, path }: ChatProps): React.JSX.Element {
   const styles = useStyles()
   const navigate = useNavigate()
     return(
-        <div className={styles.ChatFrame} onClick={() => navigate(path)}>
-            {path.includes("global") ? <Globe48Regular className={styles.Icon}/> : <Person48Regular className={styles.Icon}/>}
-            <h3 className={styles.IconName}>{title}</h3>
+        <div className={styles.chatFrame} onClick={() => navigate(path)}>
+            {path.includes("global") ? <Globe48Regular className={styles.icon}/> : <Person48Regular className={styles.icon}/>}
+            <h3 className={styles.iconName}>{title}</h3>
         </div>
     )
 };
 const useStyles = makeStyles({
-    ChatFrame: {
+    chatFrame: {
       borderLeftColor: tokens.colorNeutralBackground1,
       border: '2px solid',
       borderRadius: '10px',
@@ -86,37 +88,36 @@ const useStyles = makeStyles({
       margin: tokens.spacingHorizontalM,
       cursor: "pointer"
     },
-    Icon: {
+    icon: {
       margin: tokens.spacingHorizontalXXS,
       marginTop: tokens.spacingHorizontalL,
       marginBottom: tokens.spacingHorizontalL
     },
-    IconName:{
+    iconName:{
       fontSize: '1.5em',
       color: tokens.colorBrandForeground1,
       marginBottom: tokens.spacingHorizontalS
     },
-    Divider: {
+    divider: {
       borderLeftColor: tokens.colorNeutralBackground1,
       borderLeft: "2px solid",
       minHeight: "100px"
     },
-    ChatContainer: {
+    chatContainer: {
       display: 'flex',
       justifyContent: 'center',
       gap: '20px',
       flexWrap: 'wrap',
       padding: tokens.spacingHorizontalXL
     },
-    Link: {
+    link: {
       cursor: "pointer",
       textDecoration: "underline",
       color: tokens.colorBrandForeground1
     },
-    /*  */
     container: {
       fontFamily: 'Arial, sans-serif',
-      color: tokens.colorNeutralBackgroundInverted,
+      color: tokens.colorNeutralForeground1,
       textAlign: 'center',
       margin: 0,
       padding: 0,
