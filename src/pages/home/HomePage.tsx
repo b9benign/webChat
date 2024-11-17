@@ -1,9 +1,12 @@
 import React from "react";
 import { makeStyles, tokens } from "@fluentui/react-components";
 import Page from "../../components/page/Page";
-import { Globe32Regular, Globe48Regular, Person48Regular } from "@fluentui/react-icons";
+import { Globe32Regular, PeopleTeamRegular, Person32Regular } from "@fluentui/react-icons";
 import { useNavigate } from "react-router-dom";
-import { DefaultCard } from "../../components/card/Card";
+import { Card } from "../../components/card/Card";
+import { CardHeader } from "../../components/card/CardHeader";
+import { CardPreview } from "../../components/card/CardPreview";
+import { CardFooter } from "../../components/card/CardFooter";
 
 export default function HomePage(): React.JSX.Element {
 
@@ -34,14 +37,22 @@ export default function HomePage(): React.JSX.Element {
             Hier kannst du deine letzten Unterhaltungen direkt weiterführen!
           </p>
           <div className={styles.chatContainer}>
-            <Chat title="Global Chat" path="/chats/global"/>
+            <Card 
+              header={<CardHeader header={"Global Chat"} description={"Chatte mit Allen... ALLEN"} image={<Globe32Regular />} />}
+              preview={<CardPreview />} 
+              footer={<CardFooter onClick={() => navigate("/chats/global")}/>}
+            />
             <div className={styles.divider}/>
-            <Chat title="Chat 1" path="/chats/individuals"/>
-{/*             <Chat title="Chat 2" path="/chats/individuals"/>
-            <Chat title="Chat 3" path="/chats/individuals"/>
-            <Chat title="Chat 4" path="/chats/individuals"/>
-            <Chat title="Chat 5" path="/chats/individuals"/> */}
-            <DefaultCard header={"Global"} image={<Globe32Regular />} description={"Chatte mit Allen... ALLEN!"} onClick={() => navigate("/chats/global")}></DefaultCard>
+            <Card 
+              header={<CardHeader header={"Team Chat"} description={"Gruppenchats, mit deinen Liebsten"} image={<PeopleTeamRegular fontSize={"32px"}/>} />}
+              preview={<CardPreview />} 
+              footer={<CardFooter onClick={() => navigate("/chats/groups")}/>}
+            />
+            <Card 
+              header={<CardHeader header={"Einzel Chat"} description={"Privatnachrichten"} image={<Person32Regular />} />}
+              preview={<CardPreview />} 
+              footer={<CardFooter onClick={() => navigate("/chats/individuals")}/>}
+            />
           </div>
         </section>
 
@@ -63,21 +74,6 @@ export default function HomePage(): React.JSX.Element {
 	);
 }
 
-interface ChatProps {
-    title: string;
-    path: string;
-}
-
-function Chat({ title, path }: ChatProps): React.JSX.Element {
-  const styles = useStyles()
-  const navigate = useNavigate()
-    return(
-        <div className={styles.chatFrame} onClick={() => navigate(path)}>
-            {path.includes("global") ? <Globe48Regular className={styles.icon}/> : <Person48Regular className={styles.icon}/>}
-            <h3 className={styles.iconName}>{title}</h3>
-        </div>
-    )
-};
 const useStyles = makeStyles({
     chatFrame: {
       borderLeftColor: tokens.colorNeutralBackground1,
