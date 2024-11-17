@@ -37,7 +37,6 @@ const useStyles = makeStyles({
         minWidth: "300px",
         minHeight: "calc(100vh - 70px)",
         margin: "70px auto 0 auto",
-        paddingBottom: tokens.spacingVerticalXXXL,
         position: "relative",
     }
 })

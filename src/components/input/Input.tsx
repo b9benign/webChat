@@ -1,8 +1,28 @@
+import { Field, Input as FluentInput, makeStyles } from "@fluentui/react-components";
 import React from "react";
-import { Input as FluentInput, Field } from "@fluentui/react-components";
 import { InputProperties } from "./InputProperties";
 
 export default function Input(properties: InputProperties): React.JSX.Element {
+
+    const { nodeStyles } = useStyles();
+
+    const nodeAfter = React.useMemo(() => {
+        if (!properties.contentAfter) return null;
+        return (
+            <div className={nodeStyles}>
+                <>{properties.contentAfter}</>
+            </div>
+        )
+    }, [properties.contentAfter]);
+
+    const nodeBefore = React.useMemo(() => {
+        if (!properties.contentBefore) return null;
+        return (
+            <div className={nodeStyles}>
+                <>{properties.contentBefore}</>
+            </div>
+        )
+    }, [properties.contentBefore]);
 
     return (
         <Field
@@ -10,11 +30,12 @@ export default function Input(properties: InputProperties): React.JSX.Element {
             validationMessage={properties.validationMessage}
             validationState={properties.validationState}
             required={properties.required}
+            className={properties.className}
         >
-            <FluentInput 
+            <FluentInput
                 appearance={properties.appearance}
-                contentAfter={properties.contentAfter}
-                contentBefore={properties.contentBefore}
+                contentAfter={nodeAfter}
+                contentBefore={nodeBefore}
                 name={properties.name}
                 onBlur={properties.onBlur}
                 onChange={properties.onChange}
@@ -27,3 +48,10 @@ export default function Input(properties: InputProperties): React.JSX.Element {
         </Field>
     )
 }
+
+const useStyles = makeStyles({
+    nodeStyles: {
+        cursor: "pointer",
+        paddingTop: "4px"
+    }
+})

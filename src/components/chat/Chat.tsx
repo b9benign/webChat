@@ -1,12 +1,14 @@
-import { makeStyles } from "@fluentui/react-components";
+import { makeStyles, tokens } from "@fluentui/react-components";
+import { Send20Regular } from "@fluentui/react-icons";
 import React from "react";
 import useFirebaseFunctions from "../../services/firebase/functions/useFirebaseFunctions";
 import { FirestoreMessage } from "../../services/firebase/utility/FirestoreMessage";
+import Input from "../input/Input";
 import { ChatProperties } from "./ChatProperties";
 
 export default function Chat(properties: ChatProperties): React.JSX.Element {
 
-    const { chatWrapper } = useStyles();
+    const { chatWrapper, chatWindowStyles, inputStyles } = useStyles();
     const { chatId } = properties;
 
     const [messages, setMessages] = React.useState<FirestoreMessage[]>([]);
@@ -25,15 +27,38 @@ export default function Chat(properties: ChatProperties): React.JSX.Element {
 
     return (
         <div className={chatWrapper}>
-
+            <div className={chatWindowStyles}></div>
+            <Input
+                contentAfter={<Send20Regular />}
+                className={inputStyles}
+                appearance="underline"
+                placeholder="Say something nice"
+            />
         </div>
     )
 }
 
 const useStyles = makeStyles({
     chatWrapper: {
-        minHeight: "100px",
+        minHeight: "calc(100vh - 90px)",
         width: "100%",
-        border: "1px solid red"
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        backgroundColor: tokens.colorNeutralBackground3,
+        gap: tokens.spacingHorizontalS,
+        padding: tokens.spacingHorizontalS,
+        borderRadius: tokens.borderRadiusLarge,
+        boxShadow: tokens.shadow8Brand
+    },
+    chatWindowStyles: {
+        minHeight: "76%",
+        flexGrow: 1,
+        backgroundColor: tokens.colorNeutralBackground1,
+        borderRadius: tokens.borderRadiusLarge
+    },
+    inputStyles: {
+        height: "auto",
+        width: "100%"
     }
 })
