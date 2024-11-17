@@ -35,8 +35,8 @@ const useStyles = makeStyles({
     contentWrapper: {
         width: "90%",
         minWidth: "300px",
-        minHeight: "100vh",
-        margin: "0 auto 0 auto",
+        minHeight: "calc(100vh - 70px)",
+        margin: "70px auto 0 auto",
         paddingBottom: tokens.spacingVerticalXXXL,
         position: "relative",
     }

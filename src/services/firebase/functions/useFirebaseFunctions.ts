@@ -1,8 +1,10 @@
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword as firebaseSignInWithEmailAndPassword, signOut as fireBaseSignOut, signInWithPopup } from "firebase/auth";
-import { arrayUnion, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword as firebaseSignInWithEmailAndPassword, signOut as fireBaseSignOut, signInWithPopup, Unsubscribe } from "firebase/auth";
+import { arrayUnion, collection, doc, getDoc, onSnapshot, orderBy, query, setDoc, updateDoc } from "firebase/firestore";
+import React from "react";
 import useToastContext from "../../../context/toast/useToastContext";
 import useFirebaseInitializer from "../initializer/useFirebaseInitializer";
 import { FirestoreChat } from "../utility/FirestoreChat";
+import { FirestoreMessage } from "../utility/FirestoreMessage";
 import { FirestoreUser } from "../utility/FirestoreUser";
 import { FirebaseFunctions } from "./FirebaseFunctions";
 
@@ -98,25 +100,24 @@ export default function useFirebaseFunctions(): FirebaseFunctions {
         return documentSnapshot.data() as FirestoreUser;
     }
 
-    //chats & messages
-    const getChatDocument: FirebaseFunctions["getChatDocument"] = async ({ chatId }) => {
+    const getChatDocument: FirebaseFunctions["getChatDocument"] = React.useCallback(async ({ chatId }) => {
         const chatReference = doc(firestore, "chats", chatId);
         const chatSnapshot = await getDoc(chatReference);
 
         if (!chatSnapshot.exists()) {
-            dispatchError({ primaryContent: `Chat with id '${chatId}' could not be found. Code 65dbbeb9-8546-4cb7-954f-6eb2ba957d4c`});
+            dispatchError({ primaryContent: `Chat with id '${chatId}' could not be found. Code 65dbbeb9-8546-4cb7-954f-6eb2ba957d4c` });
             return null;
-        };
+        }
 
         return chatSnapshot.data() as FirestoreChat;
-    }
+    }, [firestore, dispatchError]);
 
     const addUserToChat: FirebaseFunctions["addUserToChat"] = async ({ chatId, uid }) => {
         const chatReference = doc(firestore, "chats", chatId);
         const chatSnapshot = await getDoc(chatReference);
 
         if (!chatSnapshot.exists()) {
-            dispatchError({ primaryContent: `Chat with id '${chatId}' could not be found. Code c8555154-9d91-407c-97af-3948a9b463c1`});
+            dispatchError({ primaryContent: `Chat with id '${chatId}' could not be found. Code c8555154-9d91-407c-97af-3948a9b463c1` });
             return;
         };
 
@@ -127,12 +128,35 @@ export default function useFirebaseFunctions(): FirebaseFunctions {
                 await updateDoc(chatReference, {
                     members: arrayUnion(uid)
                 })
-                dispatchSuccess({ primaryContent: `Successfully added user to chat ${chatData.name}`});
+                dispatchSuccess({ primaryContent: `Successfully added user to chat ${chatData.name}` });
             } catch (e: unknown) {
-                dispatchError({ primaryContent: `User could not be added to chat ${chatData.name}. Code 835168b8-99c0-469d-b1fd-f9a440278103`})
+                dispatchError({ primaryContent: `User could not be added to chat ${chatData.name}. Code 835168b8-99c0-469d-b1fd-f9a440278103` });
+                console.error(e);
             }
         }
     }
+
+    const monitorChatMessages: FirebaseFunctions["monitorChatMessages"] = React.useCallback(({ chatId, setLoading, setMessages }) => {
+        const messagesReference = collection(firestore, "chats", chatId, "messages");
+        const queryOptions = query(messagesReference, orderBy("createdAt", "asc"));
+
+        const unsubscribe: Unsubscribe = onSnapshot(queryOptions, (querySnapshot) => {
+            const newMessages: FirestoreMessage[] = [];
+            querySnapshot.forEach((doc) => {
+                newMessages.push(doc.data() as FirestoreMessage);
+            });
+            setMessages(newMessages);
+            setLoading(false);
+        },
+            (error) => {
+                dispatchError({ primaryContent: "Error loading messages. Code 8c08177b-6872-45ac-a8dd-006b3074889e" });
+                console.error(error.message);
+                setLoading(false);
+            }
+        );
+
+        return unsubscribe;
+    }, [firestore, dispatchError]);
 
 
 
@@ -146,6 +170,7 @@ export default function useFirebaseFunctions(): FirebaseFunctions {
         getUserDocument,
 
         addUserToChat,
-        getChatDocument
+        getChatDocument,
+        monitorChatMessages
     };
 }

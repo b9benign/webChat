@@ -1,6 +1,7 @@
-import { User, UserCredential } from "firebase/auth"
+import { Unsubscribe, User, UserCredential } from "firebase/auth"
 import { FirestoreUser } from "../utility/FirestoreUser"
 import { FirestoreChat } from "../utility/FirestoreChat"
+import { FirestoreMessage } from "../utility/FirestoreMessage"
 
 export type FirebaseFunctions = {
     //auth
@@ -11,10 +12,10 @@ export type FirebaseFunctions = {
     
     //db -> users
     createUserDocument(args: { userCredential: UserCredential, displayName?: string }): Promise<void>,
-    getUserDocument(args: { uid: User["uid"] }): Promise<null | FirestoreUser>
+    getUserDocument(args: { uid: User["uid"] }): Promise<FirestoreUser | null>
 
     //db -> chats & messages
     addUserToChat(args: { chatId: string, uid: User["uid"]} ): Promise<void>,
-    getChatDocument(args: {chatId: FirestoreChat["id"] }): Promise<null | FirestoreChat>,
-
+    getChatDocument(args: {chatId: FirestoreChat["id"] }): Promise<FirestoreChat | null>,
+    monitorChatMessages(args: { chatId: FirestoreChat["id"], setLoading: React.Dispatch<React.SetStateAction<boolean>>, setMessages: React.Dispatch<React.SetStateAction<FirestoreMessage[]>> }): Unsubscribe
 }
