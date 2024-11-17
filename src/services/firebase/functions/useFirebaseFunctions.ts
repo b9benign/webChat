@@ -1,7 +1,8 @@
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword as firebaseSignInWithEmailAndPassword, signOut as fireBaseSignOut, signInWithPopup } from "firebase/auth";
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import { arrayUnion, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import useToastContext from "../../../context/toast/useToastContext";
 import useFirebaseInitializer from "../initializer/useFirebaseInitializer";
+import { FirestoreChat } from "../utility/FirestoreChat";
 import { FirestoreUser } from "../utility/FirestoreUser";
 import { FirebaseFunctions } from "./FirebaseFunctions";
 
@@ -61,11 +62,12 @@ export default function useFirebaseFunctions(): FirebaseFunctions {
     }
 
     //database integration
+    //users
     const createUserDocument: FirebaseFunctions["createUserDocument"] = async ({ userCredential, displayName }) => {
         const { user } = userCredential;
-        console.log("USER: ", user);
         const documentReference = doc(firestore, 'users', user.uid);
         const documentSnapshot = await getDoc(documentReference);
+
         if (!documentSnapshot.exists()) {
             try {
                 await setDoc(documentReference, {
@@ -76,6 +78,7 @@ export default function useFirebaseFunctions(): FirebaseFunctions {
                     uid: user.uid
                 } satisfies FirestoreUser);
                 dispatchSuccess({ primaryContent: "Account created successfully!" });
+                addUserToChat({ chatId: "global", uid: user.uid });
             } catch (e: unknown) {
                 dispatchError({ primaryContent: "Database error upon account creation. Code a9304444-cbc7-4c61-aaa0-9edbf77477fd" });
                 console.error(e);
@@ -86,10 +89,52 @@ export default function useFirebaseFunctions(): FirebaseFunctions {
     const getUserDocument: FirebaseFunctions["getUserDocument"] = async ({ uid }) => {
         const documentReference = doc(firestore, 'users', uid);
         const documentSnapshot = await getDoc(documentReference);
-        if (!documentSnapshot.exists()) return dispatchError({ primaryContent: "An error occured retrieving your user profile. Code c19f6203-c410-4228-9530-75a5747d8ceb" });
-        console.log("FETCHED USER: ", documentSnapshot.data());
+
+        if (!documentSnapshot.exists()) {
+            dispatchError({ primaryContent: "An error occured retrieving your user profile. Code c19f6203-c410-4228-9530-75a5747d8ceb" });
+            return null;
+        }
+
         return documentSnapshot.data() as FirestoreUser;
     }
+
+    //chats & messages
+    const getChatDocument: FirebaseFunctions["getChatDocument"] = async ({ chatId }) => {
+        const chatReference = doc(firestore, "chats", chatId);
+        const chatSnapshot = await getDoc(chatReference);
+
+        if (!chatSnapshot.exists()) {
+            dispatchError({ primaryContent: `Chat with id '${chatId}' could not be found. Code 65dbbeb9-8546-4cb7-954f-6eb2ba957d4c`});
+            return null;
+        };
+
+        return chatSnapshot.data() as FirestoreChat;
+    }
+
+    const addUserToChat: FirebaseFunctions["addUserToChat"] = async ({ chatId, uid }) => {
+        const chatReference = doc(firestore, "chats", chatId);
+        const chatSnapshot = await getDoc(chatReference);
+
+        if (!chatSnapshot.exists()) {
+            dispatchError({ primaryContent: `Chat with id '${chatId}' could not be found. Code c8555154-9d91-407c-97af-3948a9b463c1`});
+            return;
+        };
+
+        const chatData = chatSnapshot.data() as FirestoreChat;
+        const chatMembers: FirestoreChat["members"] = chatData.members;
+        if (!chatMembers.includes(uid)) {
+            try {
+                await updateDoc(chatReference, {
+                    members: arrayUnion(uid)
+                })
+                dispatchSuccess({ primaryContent: `Successfully added user to chat ${chatData.name}`});
+            } catch (e: unknown) {
+                dispatchError({ primaryContent: `User could not be added to chat ${chatData.name}. Code 835168b8-99c0-469d-b1fd-f9a440278103`})
+            }
+        }
+    }
+
+
 
     return {
         signInWithGooglePopup,
@@ -98,6 +143,9 @@ export default function useFirebaseFunctions(): FirebaseFunctions {
         signUpWithEmailAndPassword,
 
         createUserDocument,
-        getUserDocument
+        getUserDocument,
+
+        addUserToChat,
+        getChatDocument
     };
 }

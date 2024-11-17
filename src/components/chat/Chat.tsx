@@ -9,6 +9,7 @@ export default function Chat(properties: ChatProperties): React.JSX.Element {
 
     React.useEffect(() => console.log("chatId: ", chatId), [chatId]);
 
+
     return (
         <div className={chatWrapper}>
 
