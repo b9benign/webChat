@@ -1,5 +1,5 @@
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword as firebaseSignInWithEmailAndPassword, signOut as fireBaseSignOut, signInWithPopup, Unsubscribe } from "firebase/auth";
-import { arrayUnion, collection, doc, getDoc, onSnapshot, orderBy, query, setDoc, updateDoc } from "firebase/firestore";
+import { addDoc, arrayUnion, collection, doc, getDoc, onSnapshot, orderBy, query, serverTimestamp, setDoc, updateDoc } from "firebase/firestore";
 import React from "react";
 import useToastContext from "../../../context/toast/useToastContext";
 import useFirebaseInitializer from "../initializer/useFirebaseInitializer";
@@ -136,7 +136,7 @@ export default function useFirebaseFunctions(): FirebaseFunctions {
         }
     }
 
-    const monitorChatMessages: FirebaseFunctions["monitorChatMessages"] = React.useCallback(({ chatId, setLoading, setMessages }) => {
+    const monitorChatMessages: FirebaseFunctions["monitorChatMessages"] = React.useCallback(({ chatId, setMessages }) => {
         const messagesReference = collection(firestore, "chats", chatId, "messages");
         const queryOptions = query(messagesReference, orderBy("createdAt", "asc"));
 
@@ -146,16 +146,27 @@ export default function useFirebaseFunctions(): FirebaseFunctions {
                 newMessages.push(doc.data() as FirestoreMessage);
             });
             setMessages(newMessages);
-            setLoading(false);
         },
             (error) => {
                 dispatchError({ primaryContent: "Error loading messages. Code 8c08177b-6872-45ac-a8dd-006b3074889e" });
                 console.error(error.message);
-                setLoading(false);
             }
         );
 
         return unsubscribe;
+    }, [firestore, dispatchError]);
+
+    const postMessage: FirebaseFunctions["postMessage"] = React.useCallback(async ({ chatId, message }) => {
+        const messagesReference = collection(firestore, "chats", chatId, "messages");
+        try {
+            await addDoc(messagesReference, {
+                ...message,
+                createdAt: serverTimestamp()
+            });
+        } catch (e: unknown) {
+            dispatchError({ primaryContent: "Error sending message (DB). Code f9c67b7d-52f8-410d-96ae-0a9fe2b5007c" });
+            console.error(e);
+        }
     }, [firestore, dispatchError]);
 
 
@@ -171,6 +182,7 @@ export default function useFirebaseFunctions(): FirebaseFunctions {
 
         addUserToChat,
         getChatDocument,
-        monitorChatMessages
+        monitorChatMessages,
+        postMessage
     };
 }

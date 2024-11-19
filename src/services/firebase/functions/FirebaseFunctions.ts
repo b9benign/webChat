@@ -17,5 +17,6 @@ export type FirebaseFunctions = {
     //db -> chats & messages
     addUserToChat(args: { chatId: string, uid: User["uid"]} ): Promise<void>,
     getChatDocument(args: {chatId: FirestoreChat["id"] }): Promise<FirestoreChat | null>,
-    monitorChatMessages(args: { chatId: FirestoreChat["id"], setLoading: React.Dispatch<React.SetStateAction<boolean>>, setMessages: React.Dispatch<React.SetStateAction<FirestoreMessage[]>> }): Unsubscribe
+    monitorChatMessages(args: { chatId: FirestoreChat["id"], setMessages: React.Dispatch<React.SetStateAction<FirestoreMessage[]>> }): Unsubscribe
+    postMessage(args: { chatId: FirestoreChat["id"], message: Omit<FirestoreMessage, "createdAt"> }): Promise<void>
 }

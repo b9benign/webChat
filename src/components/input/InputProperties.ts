@@ -6,6 +6,7 @@ export type InputProperties =
         | "className"
         | "contentAfter"
         | "contentBefore"
+        | "disabled"
         | "name"
         | "onBlur"
         | "onChange"

@@ -36,6 +36,7 @@ export default function Input(properties: InputProperties): React.JSX.Element {
                 appearance={properties.appearance}
                 contentAfter={nodeAfter}
                 contentBefore={nodeBefore}
+                disabled={properties.disabled}
                 name={properties.name}
                 onBlur={properties.onBlur}
                 onChange={properties.onChange}
