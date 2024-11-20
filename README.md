@@ -3,7 +3,7 @@
 A simple chat application built with React, TypeScript, Firebase Authentication, and Firestore. This app allows users to sign up, log in, and chat in real-time. Messages are stored in Firestore, and authentication is managed through Firebase.
 
 **Current live version:**
-[![Netlify Status](https://api.netlify.com/api/v1/badges/c11d63d0-86ed-4049-9f4f-49a70d754a94/deploy-status)](https://app.netlify.com/sites/teamyellowchat/deploys)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/c11d63d0-86ed-4049-9f4f-49a70d754a94/deploy-status)](https://teamyellowchat.netlify.app/)
 
 ## Features
 
