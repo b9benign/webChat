@@ -15,7 +15,7 @@ export default function GlobalChatCard(): React.JSX.Element {
     const navigate = useNavigate();
 
     const [chat, setChat] = React.useState<FirestoreChat | null>(null);
-    const { cardImageStyles, cardStyles, cardPreviewStyles, lastMessageStyles } = useStyles();
+    const { cardImageStyles, cardStyles, cardPreviewStyles, lastMessageStyles, buttonStyles } = useStyles();
 
 
     React.useEffect(() => {
@@ -42,10 +42,10 @@ export default function GlobalChatCard(): React.JSX.Element {
             />
             <CardPreview className={cardPreviewStyles}>
                 <img className={cardImageStyles} src={globeImage} alt="Image of a globe by Kyle Glenn" />
-                <div className={lastMessageStyles}>'{confineString(30, chat?.lastMessage)}'</div>
+                <div className={lastMessageStyles}>'{confineString(150, chat?.lastMessage)}'</div>
             </CardPreview>
             <CardFooter>
-                <Button icon={<ArrowReplyRegular fontSize={16} />} onClick={() => navigate(generateChatRoutePath("global"))}>Reply</Button>
+                <Button icon={<ArrowReplyRegular fontSize={16} />} onClick={() => navigate(generateChatRoutePath("global"))} className={buttonStyles}>Reply</Button>
             </CardFooter>
         </Card>
     )
@@ -54,7 +54,6 @@ export default function GlobalChatCard(): React.JSX.Element {
 const useStyles = makeStyles({
     cardStyles: {
         width: "100%",
-        maxWidth: "500px"
     },
     cardPreviewStyles: {
         position: "relative",
@@ -77,5 +76,8 @@ const useStyles = makeStyles({
         padding: tokens.spacingHorizontalL,
         background: tokens.colorNeutralBackgroundAlpha,
         fontSize: tokens.fontSizeBase500
+    },
+    buttonStyles: {
+        maxWidth: "200px",
     }
 })

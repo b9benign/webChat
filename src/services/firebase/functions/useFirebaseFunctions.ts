@@ -164,7 +164,8 @@ export default function useFirebaseFunctions(): FirebaseFunctions {
                 ...message,
                 createdAt: serverTimestamp()
             });
-            await setDoc(chatReference, {
+            //could be refactored once there's a need for a dedicated "setChatDocument" function
+            await updateDoc(chatReference, {
                 lastMessageAt: serverTimestamp(),
                 lastMessage: message.content
             })
