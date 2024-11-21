@@ -1,5 +1,5 @@
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword as firebaseSignInWithEmailAndPassword, signOut as fireBaseSignOut, signInWithPopup, Unsubscribe } from "firebase/auth";
-import { addDoc, arrayUnion, collection, doc, getDoc, onSnapshot, orderBy, query, serverTimestamp, setDoc, updateDoc } from "firebase/firestore";
+import { addDoc, arrayUnion, collection, deleteDoc, doc, getDoc, onSnapshot, orderBy, query, serverTimestamp, setDoc, updateDoc } from "firebase/firestore";
 import React from "react";
 import useToastContext from "../../../context/toast/useToastContext";
 import useFirebaseInitializer from "../initializer/useFirebaseInitializer";
@@ -143,7 +143,7 @@ export default function useFirebaseFunctions(): FirebaseFunctions {
         const unsubscribe: Unsubscribe = onSnapshot(queryOptions, (querySnapshot) => {
             const newMessages: FirestoreMessage[] = [];
             querySnapshot.forEach((doc) => {
-                newMessages.push(doc.data() as FirestoreMessage);
+                newMessages.push({ ...doc.data(), id: doc.id } as FirestoreMessage);
             });
             setMessages(newMessages);
         },
@@ -173,9 +173,20 @@ export default function useFirebaseFunctions(): FirebaseFunctions {
             dispatchError({ primaryContent: "Error sending message (DB). Code f9c67b7d-52f8-410d-96ae-0a9fe2b5007c" });
             console.error(e);
         }
-
     }, [firestore, dispatchError]);
 
+    const deleteMessage: FirebaseFunctions["deleteMessage"] = React.useCallback(async ({ chatId, messageId }) => {
+        const messageReference = doc(firestore, "chats", chatId, "messages", messageId);
+        try {
+            await deleteDoc(messageReference);
+            dispatchSuccess({ primaryContent: "Message deleted successfully." });
+        } catch (error) {
+            dispatchError({ primaryContent: `Failed to delete message with ID ${messageId}. Code b3c8cc8e-dfb6-48e7-87f3-da331c2aa60c` });
+            console.error("Error deleting message:", error);
+
+        }
+
+    }, [firestore, dispatchError, dispatchSuccess])
 
 
     return {
@@ -190,6 +201,7 @@ export default function useFirebaseFunctions(): FirebaseFunctions {
         addUserToChat,
         getChatDocument,
         monitorChatMessages,
-        postMessage
+        postMessage,
+        deleteMessage
     };
 }

@@ -68,7 +68,7 @@ export default function Chat(properties: ChatProperties): React.JSX.Element {
                     {messages.map((msg, index) => {
                         return (
                             <div className={authorIsCurrentUser(msg.authorId) ? alignRight : alignLeft} key={index}>
-                                <ChatMessage message={msg} authorIsCurrentUser={authorIsCurrentUser(msg.authorId)} />
+                                <ChatMessage message={msg} authorIsCurrentUser={authorIsCurrentUser(msg.authorId)} chatId={properties.chatId} />
                             </div>
                         );
                     })}

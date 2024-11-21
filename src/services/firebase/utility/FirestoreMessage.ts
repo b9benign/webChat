@@ -4,5 +4,6 @@ import { FirestoreUser } from "./FirestoreUser";
 export type FirestoreMessage = {
     authorId: FirestoreUser["uid"],
     content: string,
-    createdAt: firebase.firestore.Timestamp
+    createdAt: firebase.firestore.Timestamp,
+    id: string,
 }

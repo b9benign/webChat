@@ -1,4 +1,6 @@
-import { Avatar, Divider, makeStyles, mergeClasses, tokens } from "@fluentui/react-components";
+import { Avatar, Divider, makeStyles, Menu, MenuItem, MenuPopover, MenuTrigger, mergeClasses, tokens } from "@fluentui/react-components";
+import { Delete16Regular, Pen16Regular } from "@fluentui/react-icons";
+import { ChevronLeft16Regular } from "@fluentui/react-icons/fonts";
 import React from "react";
 import useThemeContext from "../../../context/theme/useThemeContext";
 import useToastContext from "../../../context/toast/useToastContext";
@@ -10,10 +12,10 @@ import { ChatMessageProperties } from "./ChatMessageProperties";
 
 export default function ChatMessage(properties: ChatMessageProperties & { authorIsCurrentUser: boolean }): React.JSX.Element {
 
-    const { messageWrapper, withAvatarStyles, withoutAvatarStyles, adjustedDarkText, adjustedLightText } = useStyles();
+    const { messageWrapper, withAvatarStyles, withoutAvatarStyles, adjustedDarkText, adjustedLightText, menuStyles } = useStyles();
     const { mode } = useThemeContext();
     const { dispatchInfo } = useToastContext();
-    const { getUserDocument } = useFirebaseFunctions();
+    const { getUserDocument, deleteMessage } = useFirebaseFunctions();
     const [author, setAuthor] = React.useState<FirestoreUser | null>(null);
 
     React.useEffect(() => {
@@ -31,6 +33,15 @@ export default function ChatMessage(properties: ChatMessageProperties & { author
                 properties.authorIsCurrentUser
                     ? <div className={mergeClasses(messageWrapper, withoutAvatarStyles, mode === "dark" ? adjustedDarkText : adjustedLightText)}>
                         {properties.message.content}
+                        <div className={menuStyles}>
+                            <Menu>
+                                <MenuTrigger><div><ChevronLeft16Regular /></div></MenuTrigger>
+                                <MenuPopover>
+                                    <MenuItem icon={<Pen16Regular />} onClick={() => dispatchInfo({ primaryContent: "Coming soon!" })}>Edit</MenuItem>
+                                    <MenuItem icon={<Delete16Regular />} onClick={() => deleteMessage({ messageId: properties.message.id, chatId: properties.chatId })}>Delete</MenuItem>
+                                </MenuPopover>
+                            </Menu>
+                        </div>
                     </div>
                     : <div className={mergeClasses(messageWrapper, withAvatarStyles)}>
                         <React.Fragment>
@@ -77,11 +88,20 @@ const useStyles = makeStyles({
     },
     withoutAvatarStyles: {
         backgroundColor: tokens.colorBrandStroke2Hover,
+        position: "relative",
+        paddingRight: "30px"
     },
     adjustedLightText: {
         color: tokens.colorNeutralBackground1
     },
     adjustedDarkText: {
         color: tokens.colorNeutralForeground1
+    },
+    menuStyles: {
+        position: "absolute",
+        top: "4px",
+        right: "4px",
+        cursor: "pointer",
+        opacity: 0.7
     }
 })
