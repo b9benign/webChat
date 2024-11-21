@@ -1,6 +1,5 @@
 import { Avatar, Divider, makeStyles, Menu, MenuItem, MenuPopover, MenuTrigger, mergeClasses, tokens } from "@fluentui/react-components";
 import { Delete16Regular, Pen16Regular } from "@fluentui/react-icons";
-import { ChevronLeft16Regular } from "@fluentui/react-icons/fonts";
 import React from "react";
 import useThemeContext from "../../../context/theme/useThemeContext";
 import useToastContext from "../../../context/toast/useToastContext";
@@ -35,7 +34,7 @@ export default function ChatMessage(properties: ChatMessageProperties & { author
                         {properties.message.content}
                         <div className={menuStyles}>
                             <Menu>
-                                <MenuTrigger><div><ChevronLeft16Regular /></div></MenuTrigger>
+                                <MenuTrigger><div>&#8942;</div></MenuTrigger>
                                 <MenuPopover>
                                     <MenuItem icon={<Pen16Regular />} onClick={() => dispatchInfo({ primaryContent: "Coming soon!" })}>Edit</MenuItem>
                                     <MenuItem icon={<Delete16Regular />} onClick={() => deleteMessage({ messageId: properties.message.id, chatId: properties.chatId })}>Delete</MenuItem>
@@ -100,7 +99,7 @@ const useStyles = makeStyles({
     menuStyles: {
         position: "absolute",
         top: "4px",
-        right: "4px",
+        right: "10px",
         cursor: "pointer",
         opacity: 0.7
     }
