@@ -1,13 +1,15 @@
 import { makeStyles, MenuDivider, tokens, Tooltip } from "@fluentui/react-components";
-import { Code20Regular, Globe20Regular, Home20Regular, Info20Regular, Person20Regular } from "@fluentui/react-icons";
-import { People20Regular } from "@fluentui/react-icons/fonts";
+import { Add20Regular, Code20Regular, Home20Regular, Info20Regular, Table20Regular } from "@fluentui/react-icons";
 import { Hamburger, NavCategory, NavDrawer, NavDrawerBody, NavDrawerHeader, NavItem, NavSectionHeader } from "@fluentui/react-nav-preview";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import useToastContext from "../../../context/toast/useToastContext";
+import generateChatsOverviewRoutePath from "../../../router/chat/generate-functions/generateChatsOverviewRoutePath";
 
 export default function NavigationMenu(): React.JSX.Element {
 
     const { navWrapper, bodyStyles } = useStyles();
+    const { dispatchInfo } = useToastContext();
     const [isOpen, setIsOpen] = React.useState<boolean>(false);
     const navigate = useNavigate();
 
@@ -29,9 +31,8 @@ export default function NavigationMenu(): React.JSX.Element {
                             <NavItem value="home" onClick={() => navigate("/")} icon={<Home20Regular />}>Home</NavItem>
                             <NavSectionHeader>Chats</NavSectionHeader>
                             <NavCategory value="chats">
-                                <NavItem value="global" onClick={() => navigate("/chats/global")} icon={<Globe20Regular />}>Global</NavItem>
-                                <NavItem value="groups" onClick={() => navigate("chats/groups")} icon={<People20Regular />}>Groups</NavItem>
-                                <NavItem value="individual" onClick={() => navigate("chats/individuals")} icon={<Person20Regular />}>Individuals</NavItem>
+                                <NavItem value="overview" onClick={() => navigate(generateChatsOverviewRoutePath())} icon={<Table20Regular />}>Overview</NavItem>
+                                <NavItem value="groups" onClick={() => dispatchInfo({ primaryContent: "Coming soon!" })} icon={<Add20Regular />}>Create</NavItem>
                             </NavCategory>
                         </div>
                         <div>
@@ -62,7 +63,7 @@ const NavHeader = ({ onClick }: { onClick(): void }): React.JSX.Element => {
     const { hamburgerStyles } = useStyles();
     return (
         <Tooltip content="Navigation" relationship="label">
-            <Hamburger onClick={onClick} className={hamburgerStyles}/>
+            <Hamburger onClick={onClick} className={hamburgerStyles} />
         </Tooltip>
     );
 }

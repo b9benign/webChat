@@ -21,7 +21,9 @@ const useStyles = makeStyles({
     navigationWrapper: {
         height: "50px",
         backgroundColor: tokens.colorNeutralBackground1,
-        boxShadow: tokens.shadow16
+        boxShadow: tokens.shadow16,
+        position: "fixed",
+        width: "100vw"
     },
     contentWrapper: {
         width: "98%",
@@ -30,6 +32,6 @@ const useStyles = makeStyles({
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-        height: "100%"
+        height: "100%",
     }
 });

@@ -1,7 +1,7 @@
 import { makeStyles, tokens } from "@fluentui/react-components";
 import Page from "../../components/page/Page";
 
-export default function TestPage(): React.JSX.Element {
+export default function NotFoundPage(): React.JSX.Element {
 
     const { notFoundWrapper, textStyles } = useStyles();
 

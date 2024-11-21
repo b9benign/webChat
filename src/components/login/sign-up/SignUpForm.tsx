@@ -6,16 +6,19 @@ import { signUpFormInputMap } from "./SignUpFormInputMap";
 import { SignUpFormInputName } from "./SignUpFormInputName";
 import { signUpFormInputNameValues } from "./signUpFormInputNameValues";
 import Button from "../../button/Button";
+import useFirebaseFunctions from "../../../services/firebase/functions/useFirebaseFunctions";
 
 export default function SignUpForm(): React.JSX.Element {
 
+    const { signUpWithEmailAndPassword } = useFirebaseFunctions();
     const { componentWrapper, formInputWrapper, buttonStyles, buttonWrapper } = useLoginStyles();
     const [formState, setFormState] = React.useState({ email: "", password: "", confirmPassword: "", username: "" });
     const [validationState, setValidationState] = React.useState({ email: "", password: "", confirmPassword: "", username: "" });
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        //integrate firestore user-docs first
+        const { email, password, username } = formState;
+        signUpWithEmailAndPassword({ displayName: username, email, password });
     }
 
     function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
