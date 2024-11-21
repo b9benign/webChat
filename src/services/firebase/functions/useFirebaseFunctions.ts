@@ -158,15 +158,21 @@ export default function useFirebaseFunctions(): FirebaseFunctions {
 
     const postMessage: FirebaseFunctions["postMessage"] = React.useCallback(async ({ chatId, message }) => {
         const messagesReference = collection(firestore, "chats", chatId, "messages");
+        const chatReference = doc(firestore, "chats", chatId);
         try {
             await addDoc(messagesReference, {
                 ...message,
                 createdAt: serverTimestamp()
             });
+            await setDoc(chatReference, {
+                lastMessageAt: serverTimestamp(),
+                lastMessage: message.content
+            })
         } catch (e: unknown) {
             dispatchError({ primaryContent: "Error sending message (DB). Code f9c67b7d-52f8-410d-96ae-0a9fe2b5007c" });
             console.error(e);
         }
+
     }, [firestore, dispatchError]);
 
 

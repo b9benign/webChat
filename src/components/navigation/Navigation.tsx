@@ -23,7 +23,8 @@ const useStyles = makeStyles({
         backgroundColor: tokens.colorNeutralBackground1,
         boxShadow: tokens.shadow16,
         position: "fixed",
-        width: "100vw"
+        width: "100vw",
+        zIndex: 3
     },
     contentWrapper: {
         width: "98%",

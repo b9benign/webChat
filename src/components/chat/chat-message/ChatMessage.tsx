@@ -7,6 +7,7 @@ import { FirestoreMessage } from "../../../services/firebase/utility/FirestoreMe
 import { FirestoreUser } from "../../../services/firebase/utility/FirestoreUser";
 import Persona from "../../persona/Persona";
 import { ChatMessageProperties } from "./ChatMessageProperties";
+import formatDate from "../formatDate";
 
 export default function ChatMessage(properties: ChatMessageProperties & { authorIsCurrentUser: boolean }): React.JSX.Element {
 
@@ -24,18 +25,6 @@ export default function ChatMessage(properties: ChatMessageProperties & { author
         }
         fetchUserDocument();
     }, [properties.message.authorId]);
-
-    const formatDate = (date: FirestoreMessage["createdAt"]): string => {
-        const formattedDate = date.toDate();
-        return formattedDate.toLocaleDateString("en-US", {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-            hour: "2-digit",
-            minute: "2-digit",
-            hour12: true,
-        });
-    }
 
     return (
         <React.Fragment>
