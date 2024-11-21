@@ -3,9 +3,9 @@ import React from "react";
 import useThemeContext from "../../../context/theme/useThemeContext";
 import useToastContext from "../../../context/toast/useToastContext";
 import useFirebaseFunctions from "../../../services/firebase/functions/useFirebaseFunctions";
-import { FirestoreMessage } from "../../../services/firebase/utility/FirestoreMessage";
 import { FirestoreUser } from "../../../services/firebase/utility/FirestoreUser";
 import Persona from "../../persona/Persona";
+import formatDate from "../formatDate";
 import { ChatMessageProperties } from "./ChatMessageProperties";
 
 export default function ChatMessage(properties: ChatMessageProperties & { authorIsCurrentUser: boolean }): React.JSX.Element {
@@ -24,18 +24,6 @@ export default function ChatMessage(properties: ChatMessageProperties & { author
         }
         fetchUserDocument();
     }, [properties.message.authorId]);
-
-    const formatDate = (date: FirestoreMessage["createdAt"]): string => {
-        const formattedDate = date.toDate();
-        return formattedDate.toLocaleDateString("en-US", {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-            hour: "2-digit",
-            minute: "2-digit",
-            hour12: true,
-        });
-    }
 
     return (
         <React.Fragment>

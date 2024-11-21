@@ -30,13 +30,12 @@ export default function Chat(properties: ChatProperties): React.JSX.Element {
     }, [chatId]);
 
     React.useEffect(() => {
-        const fetchUserDocument = async () => {
+        const fetchChatDocument = async () => {
             const result = await getChatDocument({ chatId });
             setChatTitle(result?.name ?? null);
         }
-        fetchUserDocument();
+        fetchChatDocument();
     }, [chatId]);
-
 
     const handleSend = async () => {
         if (value.trim().length <= 2) {
@@ -92,6 +91,7 @@ export default function Chat(properties: ChatProperties): React.JSX.Element {
 const useStyles = makeStyles({
     chatWrapper: {
         minHeight: "calc(100vh - 140px)",
+        maxHeight: "calc(100vh - 140px)",
         width: "100%",
         display: "flex",
         flexDirection: "column",
